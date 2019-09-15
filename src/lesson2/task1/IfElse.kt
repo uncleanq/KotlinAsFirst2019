@@ -66,7 +66,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int): String {
     return when {
-        (age % 100 == 11) or (age % 100 == 12) or (age % 10 == 0) or (age % 10 == 5) or (age % 10 == 6) or (age % 10 == 7) or (age % 10 == 8) or (age % 10 == 9) -> ("$age лет")
+        (age % 100 == 11) or (age % 100 == 12) or (age == 13) or (age % 10 == 0) or (age % 10 == 5) or (age % 10 == 6) or (age % 10 == 7) or (age % 10 == 8) or (age % 10 == 9) -> ("$age лет")
         (age % 10 == 1) -> ("$age год")
         else -> ("$age года")
     }
@@ -107,10 +107,10 @@ fun whichRookThreatens(
     rookX2: Int, rookY2: Int
 ): Int {
     return when {
-        ((kingX == rookX1) and (kingY == rookY2)) or (kingX == rookX2) and (kingY == rookY1) -> 3
-        (kingX == rookX1) or (kingY == rookY1) -> 1
-        (kingX == rookX2) or (kingY == rookY2) -> 2
-        else -> 0
+        (kingX != rookX1) and(kingX != rookX2) and (kingY != rookY1) and(kingY != rookY2) -> 0
+        (kingX == rookX1) or (kingY == rookY1) and (kingX != rookX2) and (kingY != rookY2) -> 1
+        (kingX == rookX2) or (kingY == rookY2) and (kingX != rookX1) and (kingY != rookY1) -> 2
+        else -> 3 // переписал с else 3. таку удобнее выделить чего не должно быть в "1" и "2"
     }
 }
 
@@ -183,11 +183,13 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     return when {
-        (a >= c) and (d >= b) -> b - a
-        (a < c) and (b < d) -> b - c
-        (a > c) and (a <= d) and (d < b) -> d - a
-        (a <= c) and (b >= d) -> d -c
-        (a < c) and (b < c) -> -1
+        (a > c) and (a > d) -> -1
+        (c > a) and(c > b) -> -1
+        (a == d) or (b == c) -> 0
+        (c <= a) and (b <= d) -> b - a
+        (a <= c) and (b <= d) and (c < b) -> b - c
+        (c <= a) and (a < d) and (d <= b) -> d - a
+        (a <= c) and (d <= b) -> d - c
         else -> -1
     }
 }
