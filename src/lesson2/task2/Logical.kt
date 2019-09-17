@@ -3,9 +3,10 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
-import lesson5.task1.averageStockPrice
+import lesson5.task1.averageStockPrice //эта штука не сломалась?
 import java.lang.Integer.max
 import java.lang.Math.sqrt
+import kotlin.math.abs
 
 /**
  * Пример
@@ -31,8 +32,8 @@ fun isNumberHappy(number: Int): Boolean =
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
-
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    (x1 == x2) or (y1 == y2) or ((abs(x1 - x2)) == (abs(y1 - y2)))
 
 /**
  * Простая
@@ -64,13 +65,13 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean { /* подскажите, где стоит писать комменты(я все в черновике у себя расписываю, поэтому всегда могу дополнить */
     val side_max1: Int = max(a, b)
     val side_max: Int = max(side_max1, c)
     return when {
-        side_max == a -> (r * s >= b * c)
-        b == side_max -> (r * s >= a * c)
-        c == side_max -> (r * s >= b * a)
+        (side_max == a) and (((r >= b) and (s >= c)) or ((r >= c) and (s >= b))) -> true
+        (side_max == b) and (((r >= a) and (s >= c)) or ((r >= c) and (s >= a))) -> true
+        (side_max == c) and (((r >= b) and (s >= a)) or ((r >= a) or (s >= b))) -> true
         else -> false
     }
 }
