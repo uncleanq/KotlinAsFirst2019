@@ -65,7 +65,7 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean { /* подскажите, где стоит писать комменты(я все в черновике у себя расписываю, поэтому всегда могу дополнить */
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean { /* подскажите, где стоит писать комменты(я все в черновике у себя расписываю,поэтому всегда могу дополнить */
     val side_max1: Int = max(a, b)
     val side_max: Int = max(side_max1, c)
     return when {
