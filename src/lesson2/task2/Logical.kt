@@ -53,7 +53,7 @@ fun daysInMonth(month: Int, year: Int): Int = TODO()
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = r2 >= r1 + sqrt(sqr(x2 - x1) + sqr(y2 - y1))
+): Boolean = r2 >= r1 + kotlin.math.sqrt(sqr(x2 - x1) + sqr(y2 - y1))
 
 
 /**
@@ -65,13 +65,9 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean { /* подскажите, где стоит писать комменты(я все в черновике у себя расписываю,поэтому всегда могу дополнить */
-    val side_max1: Int = max(a, b)
-    val side_max: Int = max(side_max1, c)
-    return when {
-        (side_max == a) and (((r >= b) and (s >= c)) or ((r >= c) and (s >= b))) -> true
-        (side_max == b) and (((r >= a) and (s >= c)) or ((r >= c) and (s >= a))) -> true
-        (side_max == c) and (((r >= b) and (s >= a)) or ((r >= a) or (s >= b))) -> true
-        else -> false
-    }
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    val maxi = maxOf(a, b, c)
+    val mini = minOf(a, b, c)
+    val mid = (a + b + c - mini - maxi)
+    return ((mini <= r) and (mid <= s)) or ((mini <= s) and (mid <= r))
 }
