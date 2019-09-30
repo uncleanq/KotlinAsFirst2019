@@ -93,7 +93,7 @@ fun fib(n: Int): Int {
     var i = 0
     var fib1 = 1
     var fib2 = 1
-    var numFib = 0
+    var numFib: Int//идея попросила изменить равенство нулю
     while (i < n - 2) {
         numFib = fib1 + fib2
         fib1 = fib2
@@ -265,7 +265,7 @@ fun isPalindrome(n: Int): Boolean = revert(n) == n
  */
 fun hasDifferentDigits(n: Int): Boolean {
     var num = n
-    var last = num % 10
+    val last = num % 10
     var spec = num / 10
     while (num > 0 && spec % 10 == last) {
         num /= 10
@@ -286,8 +286,8 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()/*{
-    var i = 0
+fun squareSequenceDigit(n: Int): Int = TODO()
+/*  var i = 0
     var num = 1
     var count = 0
     var answer = 0
@@ -304,6 +304,7 @@ fun squareSequenceDigit(n: Int): Int = TODO()/*{
     }
     return answer
 }
+*/
 
 /**
  * Сложная
@@ -315,7 +316,7 @@ fun squareSequenceDigit(n: Int): Int = TODO()/*{
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
-/*   var i = 0
+/*  var i = 0
     var num = 1
     var count = 0
     var answer = 0
