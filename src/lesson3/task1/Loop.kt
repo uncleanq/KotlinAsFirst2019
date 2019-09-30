@@ -315,7 +315,7 @@ fun squareSequenceDigit(n: Int): Int = TODO()/*{
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
-/*    var i = 0
+/*   var i = 0
     var num = 1
     var count = 0
     var answer = 0
