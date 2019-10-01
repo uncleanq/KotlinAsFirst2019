@@ -77,8 +77,8 @@ fun digitNumber(n: Int): Int {
         return 1
     else
         while (number > 0) {
-            count++
             number /= 10
+            count++
         }
     return count
 }
@@ -267,7 +267,7 @@ fun hasDifferentDigits(n: Int): Boolean {
     var num = n
     val last = num % 10
     var spec = num / 10
-    while (num > 0 && spec % 10 == last) {
+    while (spec > 0 && spec % 10 == last) {
         num /= 10
         spec = num
     }
@@ -291,16 +291,15 @@ fun squareSequenceDigit(n: Int): Int = TODO() /*{
     var num = 1
     var count = 0
     var answer = 0
-    var num1 = 0
-    while (n > i) {
+    while (n > count) {
         i++
         num = sqr(i)
         count += digitNumber(num)
     }
-    while (i >= n) {
+    while (count >= n) {
         answer = num % 10
         num / 10
-        i--
+        count--
     }
     return answer
 }*/
@@ -320,15 +319,15 @@ fun fibSequenceDigit(n: Int): Int = TODO() /*{
     var num = 1
     var count = 0
     var answer = 0
-    while (n > i) {
+    while (n > count) {
         i++
-        num = fib(i)
+        num = sqr(i)
         count += digitNumber(num)
     }
-    while (i >= n) {
+    while (count >= n) {
         answer = num % 10
         num / 10
-        i--
+        count--
     }
     return answer
 }*/
