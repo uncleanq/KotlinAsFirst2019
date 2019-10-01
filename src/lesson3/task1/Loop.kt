@@ -73,14 +73,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
-    when (number) {
-        0 -> return 1
-        1 -> return 1
-        else -> while (number > 0) {
-            number /= 10
-            count++
-        }
-    }
+    do {//поменял на do тк это точно учтет единичку, которая раньше не считалась
+        count++
+        number /= 10
+    } while (number != 0)
     return count
 }
 
