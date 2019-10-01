@@ -73,13 +73,14 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
-    if (number == 0)
-        return 1
-    else
-        while (number > 0) {
+    when (number) {
+        0 -> return 1
+        1 -> return 1
+        else -> while (number > 0) {
             number /= 10
             count++
         }
+    }
     return count
 }
 
@@ -266,10 +267,9 @@ fun isPalindrome(n: Int): Boolean = revert(n) == n
 fun hasDifferentDigits(n: Int): Boolean {
     var num = n
     val last = num % 10
-    var spec = num / 10
-    while (spec > 0 && spec % 10 == last) {
+    num /= 10
+    while (num > 0 && num % 10 == last) {
         num /= 10
-        spec = num
     }
     return when {
         num > 0 -> true
