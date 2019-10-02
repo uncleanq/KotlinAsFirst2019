@@ -141,18 +141,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var div = 0
-    if (n % 2 == 0)
-        return n / 2
-    else
-        for (i in 3..(sqrt(n.toDouble()) + 1).toInt())
-            if (n % i == 0) {
-                div = i
-                break
-            } else div = n
-    return n / div
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -282,7 +271,7 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO() /*{
+fun squareSequenceDigit(n: Int): Int {
     var i = 0
     var num = 1
     var count = 0
@@ -294,11 +283,11 @@ fun squareSequenceDigit(n: Int): Int = TODO() /*{
     }
     while (count >= n) {
         answer = num % 10
-        num / 10
+        num /= 10
         count--
     }
     return answer
-}*/
+}
 
 
 /**
@@ -310,20 +299,20 @@ fun squareSequenceDigit(n: Int): Int = TODO() /*{
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO() /*{
+fun fibSequenceDigit(n: Int): Int {
     var i = 0
     var num = 1
     var count = 0
     var answer = 0
     while (n > count) {
         i++
-        num = sqr(i)
+        num = fib(i)
         count += digitNumber(num)
     }
     while (count >= n) {
         answer = num % 10
-        num / 10
+        num /= 10
         count--
     }
     return answer
-}*/
+}
