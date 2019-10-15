@@ -309,7 +309,7 @@ fun convertToString(n: Int, base: Int): String = TODO() /* {
 fun decimal(digits: List<Int>, base: Int): Int = TODO() /*{
     var result = listOf<Any>(0)
     for (i in 1..digits.size)
-        result = digits[i]*/
+        result = digits[i] */
 
 /**
  * Сложная
