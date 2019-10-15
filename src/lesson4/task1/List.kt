@@ -229,7 +229,7 @@ fun factorize(n: Int): List<Int> {
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
 fun factorizeToString(n: Int): String = TODO() /*factorize(n).joinToString(separator = "*")
-прошлую надо сделать без is prime? */
+прошлую надо сделать через for? или как оптимизировать? isprime же не влияет на скорость?*/
 
 /**
  * Средняя
@@ -245,7 +245,9 @@ fun convert(n: Int, base: Int): List<Int> {
         result.add(num % base)
         num /= base
     }
-    return result.reversed()
+    return if (result.isEmpty())
+        return listOf(0)
+    else result.reversed()
 }
 
 /**
@@ -259,7 +261,43 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String = TODO() /* {
+    var list = convert(n, base)
+    val alphabet = listOf(
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z"
+    )
+    var result = mutableListOf<Any>()
+    for (number in list)
+        if (number < 10)
+            result.add(number)
+        else result.add(alphabet[n - 11])
+    return result.joinToString(" ")
+} почему если я убираю пробел в выводе получается ошибка? без него вроде считает. Заранее извиняюсь, если вопрос глупый
+надеялся избавится от этой ошибки когда решал не через список, а через строку, но што-то не получилось*/
 
 /**
  * Средняя
@@ -268,7 +306,10 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int = TODO() /*{
+    var result = listOf<Any>(0)
+    for (i in 1..digits.size)
+        result = digits[i]*/
 
 /**
  * Сложная
@@ -292,7 +333,9 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    TODO()
+}
 
 /**
  * Очень сложная
@@ -301,4 +344,6 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    TODO()
+}
