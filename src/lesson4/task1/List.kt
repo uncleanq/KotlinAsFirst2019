@@ -5,6 +5,7 @@ package lesson4.task1
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import lesson3.task1.isPrime
+import java.lang.Math.pow
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -306,10 +307,14 @@ fun convertToString(n: Int, base: Int): String = TODO() /* {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO() /*{
-    var result = listOf<Any>(0)
-    for (i in 1..digits.size)
-        result = digits[i] */
+fun decimal(digits: List<Int>, base: Int): Int {
+    var result = 0
+    var size = digits.size
+    for (i in digits.indices) {
+        result += (digits[i] * base.toDouble().pow(size - 1 - i)).toInt()//-1 тк степени с 0 считаются
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -323,7 +328,9 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO() /*{
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    TODO()
+}
 
 /**
  * Сложная
@@ -334,7 +341,17 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    TODO()
+    var number = n
+    var result = ""
+    val rome = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    val arab = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
+    var index = rome.size //выбрал  с конца чтобы основной список не переписывать
+    while (number > 0)
+        if (number >= arab[index]) {
+            result += (rome[index])
+            number -= arab[index]
+        } else index--
+    return result
 }
 
 /**
