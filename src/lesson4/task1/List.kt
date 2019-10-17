@@ -4,8 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
-import lesson3.task1.isPrime
-import java.lang.Math.pow
+import lesson3.task1.minDivisor
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -211,13 +210,12 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  */
 fun factorize(n: Int): List<Int> {
     var num = n
-    var div = 2
+    var div: Int
     val result = mutableListOf<Int>()
     while (num >= 2) {
-        if ((isPrime(div)) && (num % div == 0)) {
-            result.add(div)
-            num /= div
-        } else div++
+        div = minDivisor(num)
+        result.add(div)
+        num /= div
     }
     return result
 }
@@ -229,8 +227,7 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO() /*factorize(n).joinToString(separator = "*")
-прошлую надо сделать через for? или как оптимизировать? isprime же не влияет на скорость?*/
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя
@@ -262,43 +259,41 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO() /* {
+fun convertToString(n: Int, base: Int): String = TODO()/*{
     var list = convert(n, base)
-    val alphabet = listOf(
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-        "j",
-        "k",
-        "l",
-        "m",
-        "n",
-        "o",
-        "p",
-        "q",
-        "r",
-        "s",
-        "t",
-        "u",
-        "v",
-        "w",
-        "x",
-        "y",
-        "z"
+    val alphabet = mapOf<String>(
+        10 to "a",
+        11 to "b",
+        12 to "c",
+        13 to "d",
+        14 to "e",
+        15 to "f",
+        16 to "g",
+        17 to "h",
+        18 to "i",
+        19 to "j",
+        20 to "k",
+        21 to "l",
+        22 to "m",
+        23 to "n",
+        24 to "o",
+        25 to "p",
+        26 to "q",
+        27 to "r",
+        28 to "s",
+        29 to "t",
+        30 to "u",
+        31 to "v",
+        32 to 'w',
+        33
     )
     var result = mutableListOf<Any>()
     for (number in list)
         if (number < 10)
             result.add(number)
-        else result.add(alphabet[n - 11])
+        else result.add(alphabet[n])
     return result.joinToString(" ")
-} почему если я убираю пробел в выводе получается ошибка? без него вроде считает. Заранее извиняюсь, если вопрос глупый
-надеялся избавится от этой ошибки когда решал не через список, а через строку, но што-то не получилось*/
+} */
 
 /**
  * Средняя
@@ -309,7 +304,7 @@ fun convertToString(n: Int, base: Int): String = TODO() /* {
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
-    var size = digits.size
+    val size = digits.size
     for (i in digits.indices) {
         result += (digits[i] * base.toDouble().pow(size - 1 - i)).toInt()//-1 тк степени с 0 считаются
     }
@@ -343,14 +338,14 @@ fun decimalFromString(str: String, base: Int): Int {
 fun roman(n: Int): String {
     var number = n
     var result = ""
-    val rome = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
-    val arab = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
-    var index = rome.size //выбрал  с конца чтобы основной список не переписывать
+    val rome = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M").reversed()
+    val arab = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000).reversed()
+    var index = 0
     while (number > 0)
         if (number >= arab[index]) {
             result += (rome[index])
             number -= arab[index]
-        } else index--
+        } else index++
     return result
 }
 
@@ -361,6 +356,20 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String {
-    TODO()
-}
+fun russian(n: Int): String = TODO()/* {
+val result = mutableListOf<String>()
+    if (n > 100000) {// для самых больших, наверное зря я их так делю, 
+        when (n / 100000) {
+            1 -> result.add("сто ")
+            2 -> result.add("двести ")
+            3 -> result.add("триста ")
+            4 -> result.add("четыреста ")
+            5 -> result.add("пятьсот ")
+            6 -> result.add("шестьсот ")
+            7 -> result.add("семьсот ")
+            8 -> result.add("восемьсот ")
+            9 -> result.add("девятсот ")
+        }
+        if  in 20..99)
+    }
+} */
