@@ -213,7 +213,7 @@ fun factorize(n: Int): List<Int> {
     var num = n
     var div = 0
     val result = mutableListOf<Int>()
-    while (num >= 2) {
+    while (num > 1) {
         div = minDivisor(num)
         result.add(div)
         num /= div
