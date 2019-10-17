@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import lesson3.task1.isPrime
 import lesson3.task1.minDivisor
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -210,7 +211,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  */
 fun factorize(n: Int): List<Int> {
     var num = n
-    var div: Int
+    var div = 0
     val result = mutableListOf<Int>()
     while (num >= 2) {
         div = minDivisor(num)
