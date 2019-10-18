@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import lesson3.task1.digitNumber
 import lesson3.task1.isPrime
 import lesson3.task1.minDivisor
 import kotlin.math.pow
@@ -211,13 +212,16 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  */
 fun factorize(n: Int): List<Int> {
     var num = n
-    var div: Int
+    var div = 2
     val result = mutableListOf<Int>()
-    while (num > 1) {
-        div = minDivisor(num)
-        result.add(div)
-        num /= div
-    }
+    do {
+        while (num % div == 0) {
+            result.add(div)
+            num /= div
+        }
+        div++
+    } while (num > 1)
+
     return result
 }
 
@@ -357,20 +361,126 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()/* {
-val result = mutableListOf<String>()
-    if (n > 100000) {// для самых больших, наверное зря я их так делю, 
-        when (n / 100000) {
-            1 -> result.add("сто ")
-            2 -> result.add("двести ")
-            3 -> result.add("триста ")
-            4 -> result.add("четыреста ")
-            5 -> result.add("пятьсот ")
-            6 -> result.add("шестьсот ")
-            7 -> result.add("семьсот ")
-            8 -> result.add("восемьсот ")
-            9 -> result.add("девятсот ")
+fun russian(n: Int): String {
+    var result = ""
+    var count = digitNumber(n) //кол-во цифр
+    var num = n
+    while (count > 0) {
+        if (count == 6) {//берем макс вариант
+            when {
+                num % 100000 == 1 -> result += "сто"
+                num % 100000 == 2 -> result += ("двести")
+                num % 100000 == 3 -> result += ("триста")
+                num % 100000 == 4 -> result += ("четыреста")
+                num % 100000 == 5 -> result += ("пятьсот")
+                num % 100000 == 6 -> result += ("шестьсот")
+                num % 100000 == 7 -> result += ("семьсот")
+                num % 100000 == 8 -> result += ("восемьсот")
+                num % 100000 == 9 -> result += ("девятьсот")
+            }
+            num %= 100000//убираем первую циферу 9/99999
+            count--//уменьшаем кол-во цифр
         }
-        if  in 20..99)
+        if (count == 5) {
+            if (num / 1000 in 10..19) {//случай для специальных
+                when (num / 1000) {
+                    10 -> result += ("десять тысяч")
+                    11 -> result += ("одинадцать тысяч")
+                    12 -> result += ("двенадцать тысяч")
+                    13 -> result += ("тринадцать тысяч")
+                    14 -> result += ("четырнадцать тысяч")
+                    15 -> result += ("пятнадцать тысяч")
+                    16 -> result += ("шестнадцать тысяч")
+                    17 -> result += ("семнадцать тысяч")
+                    18 -> result += ("восемнадцать тысяч")
+                    19 -> result += ("девятнадцать тысяч")
+                }
+                count -= 2//убираем 2 тк посчитали 2 цифры
+                num %= 1000//99 999
+            } else {
+                when (num / 10000) {
+                    2 -> result += ("двадцать")
+                    3 -> result += ("тридцать")
+                    4 -> result += ("сорок")
+                    5 -> result += ("пятьдесят")
+                    6 -> result += ("шестьдесят")
+                    7 -> result += ("семьдесят")
+                    8 -> result += ("восемьдесят")
+                    9 -> result += ("девяносто")
+                }
+                count--
+                num %= 1000//9 9999
+                when (num / 1000) {
+                    0 -> result += ("тысяч")
+                    1 -> result += ("одна тысяча")
+                    2 -> result += ("две тысячи")
+                    3 -> result += ("три тысячи")
+                    4 -> result += ("четыре тысячи")
+                    5 -> result += ("пять тысяч")
+                    6 -> result += ("шесть тысяч")
+                    7 -> result += ("семь тысяч")
+                    8 -> result += ("восемь тысяч")
+                    9 -> result += ("девять тысяч")
+                }
+                count--
+                num %= 1000 //9 999
+            }
+        }
+        if (count == 3) {
+            when (n / 100) {
+                1 -> result += ("сто")
+                2 -> result += ("двести")
+                3 -> result += ("триста")
+                4 -> result += ("четыреста")
+                5 -> result += ("пятьсот")
+                6 -> result += ("шестьсот")
+                7 -> result += ("семьсот")
+                8 -> result += ("восемьсот")
+                9 -> result += ("девятьсот")
+            }
+            count--
+            num %= 100
+        }
+        if (count == 2) {
+            when (num) {
+                10 -> result += ("десять")
+                11 -> result += ("одинадцать")
+                12 -> result += ("двенадцать")
+                13 -> result += ("тринадцать")
+                14 -> result += ("четырнадцать")
+                15 -> result += ("пятнадцать")
+                16 -> result += ("шестнадцать")
+                17 -> result += ("семнадцать")
+                18 -> result += ("восемнадцать")
+                19 -> result += ("девятнадцать")
+            }
+            count -= 2
+            num = 0
+        } else {
+            when (num / 10) {
+                2 -> result += ("двадцать")
+                3 -> result += ("тридцать")
+                4 -> result += ("сорок")
+                5 -> result += ("пятьдесят")
+                6 -> result += ("шестьдесят")
+                7 -> result += ("семьдесят")
+                8 -> result += ("восемьдесят")
+                9 -> result += ("девяносто")
+            }
+            count--
+            num %= 10
+            when (num) {
+                1 -> result += ("один")
+                2 -> result += ("два")
+                3 -> result += ("три")
+                4 -> result += ("четыре")
+                5 -> result += ("пять")
+                6 -> result += ("шесть")
+                7 -> result += ("семь")
+                8 -> result += ("восемь")
+                9 -> result += ("девять")
+            }
+        }
     }
-} */
+    return (result)
+}
