@@ -363,7 +363,7 @@ fun roman(n: Int): String {
  */
 fun russian(n: Int): String {
     var result = ""
-    var count = digitNumber(n) //кол-во цифр
+    var count = digitNumber(n) // кол-во цифр
     var num = n
     while (count > 0) {
         if (count == 6) {//берем макс вариант
