@@ -518,53 +518,102 @@ fun russian(n: Int): String {
                     0 -> {
                         count--
                         num %= 1000
-                        result += ("тысяч")
+                        result += ("тысяч ")
                     }
                     1 -> {
                         count--
                         num %= 1000
-                        result += ("одна тысяча")
+                        result += ("одна тысяча ")
                     }
                     2 -> {
                         count--
                         num %= 1000
-                        result += ("две тысячи")
+                        result += ("две тысячи ")
                     }
                     3 -> {
                         count--
                         num %= 1000
-                        result += ("три тысячи")
+                        result += ("три тысячи ")
                     }
                     4 -> {
                         count--
                         num %= 1000
-                        result += ("четыре тысячи")
+                        result += ("четыре тысячи ")
                     }
                     5 -> {
                         count--
                         num %= 1000
-                        result += ("пять тысяч")
+                        result += ("пять тысяч ")
                     }
                     6 -> {
                         count--
                         num %= 1000
-                        result += ("шесть тысяч")
+                        result += ("шесть тысяч ")
                     }
                     7 -> {
                         count--
                         num %= 1000
-                        result += ("семь тысяч")
+                        result += ("семь тысяч ")
                     }
                     8 -> {
                         count--
                         num %= 1000
-                        result += ("восемь тысяч")
+                        result += ("восемь тысяч ")
                     }
                     9 -> {
                         count--
                         num %= 1000
-                        result += ("девять тысяч")
+                        result += ("девять тысяч ")
                     }
+                }
+            }
+        }
+        if (count == 4) {
+            when (num / 1000) {
+                1 -> {
+                    count--
+                    num %= 1000
+                    result += ("одна тысяча")
+                }
+                2 -> {
+                    count--
+                    num %= 1000
+                    result += ("две тысячи")
+                }
+                3 -> {
+                    count--
+                    num %= 1000
+                    result += ("три тысячи")
+                }
+                4 -> {
+                    count--
+                    num %= 1000
+                    result += ("четыре тысячи")
+                }
+                5 -> {
+                    count--
+                    num %= 1000
+                    result += ("пять тысяч")
+                }
+                6 -> {
+                    count--
+                    num %= 1000
+                    result += ("шесть тысяч")
+                }
+                7 -> {
+                    count--
+                    num %= 1000
+                    result += ("семь тысяч")
+                }
+                8 -> {
+                    count--
+                    num %= 1000
+                    result += ("восемь тысяч")
+                }
+                9 -> {
+                    count--
+                    num %= 1000
+                    result += ("девять тысяч")
                 }
             }
         }
@@ -760,6 +809,55 @@ fun russian(n: Int): String {
                         num = 0
                         result += ("девять")
                     }
+                }
+            }
+        }
+        if (count == 1) {
+            when (num) {
+                1 -> {
+                    count--
+                    num = 0
+                    result += ("один")
+                }
+                2 -> {
+                    count--
+                    num = 0
+                    result += ("два")
+                }
+                3 -> {
+                    count--
+                    num = 0
+                    result += ("три")
+                }
+                4 -> {
+                    count--
+                    num = 0
+                    result += ("четыре")
+                }
+                5 -> {
+                    count--
+                    num = 0
+                    result += ("пять")
+                }
+                6 -> {
+                    count--
+                    num = 0
+                    result += ("шесть")
+                }
+                7 -> {
+                    count--
+                    num = 0
+                    result += ("семь")
+                }
+                8 -> {
+                    count--
+                    num = 0
+                    result += ("восемь")
+                }
+                9 -> {
+                    count--
+                    num = 0
+                    result += ("девять")
                 }
             }
         }
