@@ -473,47 +473,45 @@ fun russian(n: Int): String {
                 when (num / 10000) {
                     2 -> {
                         count--
-                        num %= 1000
+                        num %= 10000
                         result += ("двадцать ")
                     }
                     3 -> {
                         count--
-                        num %= 1000
+                        num %= 10000
                         result += ("тридцать ")
                     }
                     4 -> {
                         count--
-                        num %= 1000
+                        num %= 10000
                         result += ("сорок ")
                     }
                     5 -> {
                         count--
-                        num %= 1000
+                        num %= 10000
                         result += ("пятьдесят ")
                     }
                     6 -> {
                         count--
-                        num %= 1000
+                        num %= 10000
                         result += ("шестьдесят ")
                     }
                     7 -> {
                         count--
-                        num %= 1000
+                        num %= 10000
                         result += ("семьдесят ")
                     }
                     8 -> {
                         count--
-                        num %= 1000
+                        num %= 10000
                         result += ("восемьдесят ")
                     }
                     9 -> {
                         count--
-                        num %= 1000
+                        num %= 10000
                         result += ("девяносто ")
                     }
                 }
-                count--
-                num %= 1000
                 when (num / 1000) {
                     0 -> {
                         count--
