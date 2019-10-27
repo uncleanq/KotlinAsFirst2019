@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import java.lang.Math.max
+
 /**
  * Пример
  *
@@ -91,7 +93,15 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val result = mutableMapOf<Int, MutableList<String>>()
+    for ((student, grade) in grades)
+        if (grade in result)
+            result[grade]!!.add(student)// тут правильно !! юзать?
+        else
+            result[grade] = mutableListOf(student)
+    return result
+}
 
 /**
  * Простая
@@ -103,7 +113,12 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    for ((k) in a)
+        if (b[k] != a[k])
+            return false
+    return true
+}
 
 /**
  * Простая
@@ -119,7 +134,11 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *   subtractOf(a = mutableMapOf("a" to "z"), mapOf("a" to "z"))
  *     -> a changes to mutableMapOf() aka becomes empty
  */
-fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit = TODO()
+fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
+    for ((k, v) in b)
+        if (a[k] == b[k])
+            a.remove(k, v) // я убрал юнит тк идея попросила(справа полочочка жёлтая)
+}
 
 /**
  * Простая
@@ -128,7 +147,10 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit = TO
  * В выходном списке не должно быть повторяюихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.toSet().intersect(
+    b.toSet()
+).toList()
+
 
 /**
  * Средняя
@@ -147,7 +169,16 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val result = mapA.toMutableMap()
+    for ((name, number) in mapB)
+        if (name !in result)
+            result[name] = number
+        else
+            if (result[name] != number)
+                result[name] += ", $number"
+    return result
+}
 
 /**
  * Средняя
@@ -280,4 +311,22 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()/*{
+написать на котлине что-то не получается, тк пишу как как решал эту задачу еще на паскале вроде. пытался вывести, но
+не получается. В иттоге каша на середине,ыы. как мне считать значения не в bag, мне же надо перезаписать макс?
+записывать отделаьно и отказаться от решения через вот такой максимум?
+и как правильно сохранять значения названий?
+если слишком плохо написал,(я уже сам не понял) не объясняйте, спрошу на практике
+    var bag = mutableListOf<Triple<Int, Int, Int>>()
+    //номер, вес, цена
+    for ((name, pair) in treasures) {
+        for (i in 1..treasures.size) {
+            for (j in 0..capacity) {
+                if (pair.first <= j) {
+                    bag[i,j] = max(bag[i,j], bag[i - 1, j - pair.first] )
+                }
+                }
+            }
+        }
+    }
+*/
