@@ -232,7 +232,16 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val result = mutableMapOf<String, Int>()
+    for (k in list) {
+        if (k in result)
+            result[k] = result[k]!! + 1
+        else
+            result[k] = 1
+    }
+    return result.filter { it.value > 1 }// спасибо лекции, действительно можно писать более удобные и правильные проги
+}
 
 /**
  * Средняя
@@ -311,22 +320,4 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()/*{
-написать на котлине что-то не получается, тк пишу как как решал эту задачу еще на паскале вроде. пытался вывести, но
-не получается. В иттоге каша на середине,ыы. как мне считать значения не в bag, мне же надо перезаписать макс?
-записывать отделаьно и отказаться от решения через вот такой максимум?
-и как правильно сохранять значения названий?
-если слишком плохо написал,(я уже сам не понял) не объясняйте, спрошу на практике
-    var bag = mutableListOf<Triple<Int, Int, Int>>()
-    //номер, вес, цена
-    for ((name, pair) in treasures) {
-        for (i in 1..treasures.size) {
-            for (j in 0..capacity) {
-                if (pair.first <= j) {
-                    bag[i,j] = max(bag[i,j], bag[i - 1, j - pair.first] )
-                }
-                }
-            }
-        }
-    }
-*/
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()

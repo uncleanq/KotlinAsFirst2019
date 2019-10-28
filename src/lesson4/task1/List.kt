@@ -5,6 +5,7 @@ package lesson4.task1
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import lesson3.task1.digitNumber
+import lesson3.task1.fib
 import lesson3.task1.isPrime
 import lesson3.task1.minDivisor
 import kotlin.math.pow
@@ -361,504 +362,95 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
+//перепишу послностью, то решение слишком много похожу считает, сделаю оптимальнее
+//просто поделю на 2 куска, чтобы сотни считать, тк они одинаково считаются, только в первую тройку надо "тысяч" дописать в массив
 fun russian(n: Int): String {
-    var result = ""
-    var count = digitNumber(n) // кол-во цифр
-    var num = n
-    while (count > 0) {
-        if (count == 6) {//берем макс вариант
-            when {
-                num % 100000 == 1 -> {
-                    result += "сто "
-                    num %= 100000
-                    count--
-                }
-                num % 100000 == 2 -> {
-                    num %= 100000
-                    count--
-                    result += ("двести ")
-                }
-                num % 100000 == 3 -> {
-                    num %= 100000
-                    count--
-                    result += ("триста ")
-                }
-                num % 100000 == 4 -> {
-                    num %= 100000
-                    count--
-                    result += ("четыреста ")
-                }
-                num % 100000 == 5 -> {
-                    num %= 100000
-                    count--
-                    result += ("пятьсот ")
-                }
-                num % 100000 == 6 -> {
-                    num %= 100000
-                    count--
-                    result += ("шестьсот ")
-                }
-                num % 100000 == 7 -> {
-                    num %= 100000
-                    count--
-                    result += ("семьсот ")
-                }
-                num % 100000 == 8 -> {
-                    num %= 100000
-                    count--
-                    result += ("восемьсот ")
-                }
-                num % 100000 == 9 -> {
-                    num %= 100000
-                    count--
-                    result += ("девятьсот ")
-                }
-            }
-        }
-        if (count == 5) {
-            if (num / 1000 in 10..19) {//случай для специальных
-                when (num / 1000) {
-                    10 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("десять тысяч ")
-                    }
-                    11 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("одинадцать тысяч ")
-                    }
-                    12 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("двенадцать тысяч ")
-                    }
-                    13 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("тринадцать тысяч ")
-                    }
-                    14 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("четырнадцать тысяч ")
-                    }
-                    15 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("пятнадцать тысяч ")
-                    }
-                    16 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("шестнадцать тысяч ")
-                    }
-                    17 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("семнадцать тысяч ")
-                    }
-                    18 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("восемнадцать тысяч ")
-                    }
-                    19 -> {
-                        count -= 2
-                        num %= 1000
-                        result += ("девятнадцать тысяч ")
-                    }
-                }
-            } else {
-                when (num / 10000) {
-                    2 -> {
-                        count--
-                        num %= 10000
-                        result += ("двадцать ")
-                    }
-                    3 -> {
-                        count--
-                        num %= 10000
-                        result += ("тридцать ")
-                    }
-                    4 -> {
-                        count--
-                        num %= 10000
-                        result += ("сорок ")
-                    }
-                    5 -> {
-                        count--
-                        num %= 10000
-                        result += ("пятьдесят ")
-                    }
-                    6 -> {
-                        count--
-                        num %= 10000
-                        result += ("шестьдесят ")
-                    }
-                    7 -> {
-                        count--
-                        num %= 10000
-                        result += ("семьдесят ")
-                    }
-                    8 -> {
-                        count--
-                        num %= 10000
-                        result += ("восемьдесят ")
-                    }
-                    9 -> {
-                        count--
-                        num %= 10000
-                        result += ("девяносто ")
-                    }
-                }
-                when (num / 1000) {
-                    0 -> {
-                        count--
-                        num %= 1000
-                        result += ("тысяч ")
-                    }
-                    1 -> {
-                        count--
-                        num %= 1000
-                        result += ("одна тысяча ")
-                    }
-                    2 -> {
-                        count--
-                        num %= 1000
-                        result += ("две тысячи ")
-                    }
-                    3 -> {
-                        count--
-                        num %= 1000
-                        result += ("три тысячи ")
-                    }
-                    4 -> {
-                        count--
-                        num %= 1000
-                        result += ("четыре тысячи ")
-                    }
-                    5 -> {
-                        count--
-                        num %= 1000
-                        result += ("пять тысяч ")
-                    }
-                    6 -> {
-                        count--
-                        num %= 1000
-                        result += ("шесть тысяч ")
-                    }
-                    7 -> {
-                        count--
-                        num %= 1000
-                        result += ("семь тысяч ")
-                    }
-                    8 -> {
-                        count--
-                        num %= 1000
-                        result += ("восемь тысяч ")
-                    }
-                    9 -> {
-                        count--
-                        num %= 1000
-                        result += ("девять тысяч ")
-                    }
-                }
-            }
-        }
-        if (count == 4) {
-            when (num / 1000) {
-                1 -> {
-                    count--
-                    num %= 1000
-                    result += ("одна тысяча")
-                }
-                2 -> {
-                    count--
-                    num %= 1000
-                    result += ("две тысячи")
-                }
-                3 -> {
-                    count--
-                    num %= 1000
-                    result += ("три тысячи")
-                }
-                4 -> {
-                    count--
-                    num %= 1000
-                    result += ("четыре тысячи")
-                }
-                5 -> {
-                    count--
-                    num %= 1000
-                    result += ("пять тысяч")
-                }
-                6 -> {
-                    count--
-                    num %= 1000
-                    result += ("шесть тысяч")
-                }
-                7 -> {
-                    count--
-                    num %= 1000
-                    result += ("семь тысяч")
-                }
-                8 -> {
-                    count--
-                    num %= 1000
-                    result += ("восемь тысяч")
-                }
-                9 -> {
-                    count--
-                    num %= 1000
-                    result += ("девять тысяч")
-                }
-            }
-        }
-        if (count == 3) {
-            when (n / 100) {
-                1 -> {
-                    count--
-                    num %= 100
-                    result += ("сто ")
-                }
-                2 -> {
-                    count--
-                    num %= 100
-                    result += ("двести ")
-                }
-                3 -> {
-                    count--
-                    num %= 100
-                    result += ("триста ")
-                }
-                4 -> {
-                    count--
-                    num %= 100
-                    result += ("четыреста ")
-                }
-                5 -> {
-                    count--
-                    num %= 100
-                    result += ("пятьсот ")
-                }
-                6 -> {
-                    count--
-                    num %= 100
-                    result += ("шестьсот ")
-                }
-                7 -> {
-                    count--
-                    num %= 100
-                    result += ("семьсот ")
-                }
-                8 -> {
-                    count--
-                    num %= 100
-                    result += ("восемьсот ")
-                }
-                9 -> {
-                    count--
-                    num %= 100
-                    result += ("девятьсот ")
-                }
-            }
-        }
-        if (count == 2) {
-            if (num in 10..19) {
-                when (num) {
-                    10 -> {
-                        count -= 2
-                        num = 0
-                        result += ("десять ")
-                    }
-                    11 -> {
-                        count -= 2
-                        num = 0
-                        result += ("одинадцать ")
-                    }
-                    12 -> {
-                        count -= 2
-                        num = 0
-                        result += ("двенадцать ")
-                    }
-                    13 -> {
-                        count -= 2
-                        num = 0
-                        result += ("тринадцать ")
-                    }
-                    14 -> {
-                        count -= 2
-                        num = 0
-                        result += ("четырнадцать ")
-                    }
-                    15 -> {
-                        count -= 2
-                        num = 0
-                        result += ("пятнадцать ")
-                    }
-                    16 -> {
-                        count -= 2
-                        num = 0
-                        result += ("шестнадцать ")
-                    }
-                    17 -> {
-                        count -= 2
-                        num = 0
-                        result += ("семнадцать ")
-                    }
-                    18 -> {
-                        count -= 2
-                        num = 0
-                        result += ("восемнадцать ")
-                    }
-                    19 -> {
-                        count -= 2
-                        num = 0
-                        result += ("девятнадцать ")
-                    }
-                }
-            } else {
-                when (num / 10) {
-                    2 -> {
-                        count--
-                        num %= 10
-                        result += ("двадцать ")
-                    }
-                    3 -> {
-                        count--
-                        num %= 10
-                        result += ("тридцать ")
-                    }
-                    4 -> {
-                        count--
-                        num %= 10
-                        result += ("сорок ")
-                    }
-                    5 -> {
-                        count--
-                        num %= 10
-                        result += ("пятьдесят ")
-                    }
-                    6 -> {
-                        count--
-                        num %= 10
-                        result += ("шестьдесят ")
-                    }
-                    7 -> {
-                        count--
-                        num %= 10
-                        result += ("семьдесят ")
-                    }
-                    8 -> {
-                        count--
-                        num %= 10
-                        result += ("восемьдесят ")
-                    }
-                    9 -> {
-                        count--
-                        num %= 10
-                        result += ("девяносто ")
-                    }
-                }
-                when (num) {
-                    1 -> {
-                        count--
-                        num = 0
-                        result += ("один")
-                    }
-                    2 -> {
-                        count--
-                        num = 0
-                        result += ("два")
-                    }
-                    3 -> {
-                        count--
-                        num = 0
-                        result += ("три")
-                    }
-                    4 -> {
-                        count--
-                        num = 0
-                        result += ("четыре")
-                    }
-                    5 -> {
-                        count--
-                        num = 0
-                        result += ("пять")
-                    }
-                    6 -> {
-                        count--
-                        num = 0
-                        result += ("шесть")
-                    }
-                    7 -> {
-                        count--
-                        num = 0
-                        result += ("семь")
-                    }
-                    8 -> {
-                        count--
-                        num = 0
-                        result += ("восемь")
-                    }
-                    9 -> {
-                        count--
-                        num = 0
-                        result += ("девять")
-                    }
-                }
-            }
-        }
-        if (count == 1) {
-            when (num) {
-                1 -> {
-                    count--
-                    num = 0
-                    result += ("один")
-                }
-                2 -> {
-                    count--
-                    num = 0
-                    result += ("два")
-                }
-                3 -> {
-                    count--
-                    num = 0
-                    result += ("три")
-                }
-                4 -> {
-                    count--
-                    num = 0
-                    result += ("четыре")
-                }
-                5 -> {
-                    count--
-                    num = 0
-                    result += ("пять")
-                }
-                6 -> {
-                    count--
-                    num = 0
-                    result += ("шесть")
-                }
-                7 -> {
-                    count--
-                    num = 0
-                    result += ("семь")
-                }
-                8 -> {
-                    count--
-                    num = 0
-                    result += ("восемь")
-                }
-                9 -> {
-                    count--
-                    num = 0
-                    result += ("девять")
-                }
-            }
+    val result = mutableListOf<String>()
+    var thousand = ""
+    val special = listOf(
+        "",
+        "одиннадцать",
+        "двенадцать",
+        "тринадцаить",
+        "четырнадцать",
+        "пятнадцать",
+        "шестнадцать",
+        "семнадцать",
+        "восемнадцать",
+        "девятнадцать"
+    )
+    val hundred = listOf(
+        "",
+        "сто",
+        "двести",
+        "триста",
+        "четыреста",
+        "пятьсот",
+        "шестьсот",
+        "семьсот",
+        "восемьсот",
+        "девятьсот"
+    )
+    val dec = listOf(
+        "",
+        "десять",
+        "двадцать",
+        "тридцать",
+        "сорок",
+        "пятьдесят",
+        "шестьдесят",
+        "семьдесят",
+        "восемьдесят",
+        "девяносто"
+
+    )
+    val unit = listOf(
+        "",
+        "один",
+        "два",
+        "три",
+        "четыре",
+        "пять",
+        "шесть",
+        "семь",
+        "восемь",
+        "девять"
+    )
+    //первые 3 цифЕры
+    val smallHundred = mutableListOf<String>()
+    val sh = n % 1000
+    val bigHundred = mutableListOf<String>()
+    val bh = n / 1000
+    // поделил на 2 части по 3 цифры
+    if (bh > 0) {
+        bigHundred.add(hundred[bh / 100])
+        if (bh % 100 in 11..19)
+            smallHundred.add(special[bh % 10])
+        else {
+            smallHundred.add(dec[bh / 10 % 10])
+            smallHundred.add(unit[bh % 10]) //можно было через функцию, но я забыл
         }
     }
-    return (result)
+    result += bigHundred
+    if ((bh > 0) && (bh % 100 in 11..19))
+        thousand = "тысяч"
+    else if ((bh > 0) && (bh % 100 !in 11..19) && (bh % 10 in 2..4))
+        thousand = "тысячи"
+    else if ((bh > 0) && (bh % 100 !in 11..19) && (bh % 10 == 1))
+        thousand = "тысяча"
+    else if (bh > 0)
+        thousand = "тысяч"
+    result += thousand
+    //считаю для маленькой тройки
+    if (sh > 0) {
+        smallHundred.add(hundred[sh / 100])//добавил сотни
+        if (sh % 100 in 11..19)
+            smallHundred.add(special[sh % 10]) // добавил 11..19 если исключения
+        else {
+            smallHundred.add(dec[sh / 10 % 10])
+            smallHundred.add(unit[sh % 10])//десятки и единички, их нельзя в одном адде добавить?
+        }
+    }
+    result += smallHundred
+    return result.toString()
 }
