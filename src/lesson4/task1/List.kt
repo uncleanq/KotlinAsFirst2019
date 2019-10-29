@@ -265,41 +265,8 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()/*{
-    var list = convert(n, base)
-    val alphabet = mapOf<String>(
-        10 to "a",
-        11 to "b",
-        12 to "c",
-        13 to "d",
-        14 to "e",
-        15 to "f",
-        16 to "g",
-        17 to "h",
-        18 to "i",
-        19 to "j",
-        20 to "k",
-        21 to "l",
-        22 to "m",
-        23 to "n",
-        24 to "o",
-        25 to "p",
-        26 to "q",
-        27 to "r",
-        28 to "s",
-        29 to "t",
-        30 to "u",
-        31 to "v",
-        32 to 'w',
-        33
-    )
-    var result = mutableListOf<Any>()
-    for (number in list)
-        if (number < 10)
-            result.add(number)
-        else result.add(alphabet[n])
-    return result.joinToString(" ")
-} */
+fun convertToString(n: Int, base: Int): String = TODO()
+
 
 /**
  * Средняя
@@ -443,11 +410,9 @@ fun russian(n: Int): String {
         }
     }
     result += bigHundred
-    if ((bh > 0) && (bh % 100 in 11..14))// поменял с 19 на 14, тк для значений 5 и 15 thousand равны. до 14 тк если значение от 2..4 то
-        result += "тысяч"
-    else if ((bh > 0) && (bh % 100 !in 11..14) && (bh % 10 in 2..4))
+    if ((bh > 0) && (bh % 100 !in 12..14) && (bh % 10 in 2..4))
         result += "тысячи"
-    else if ((bh > 0) && (bh % 100 !in 11..14) && (bh % 10 == 1))
+    else if ((bh > 0) && (bh % 10 == 1) && (bh % 100 != 11))
         result += "тысяча"
     else if (bh > 0)
         result += "тысяч"
