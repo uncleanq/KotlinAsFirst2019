@@ -320,4 +320,22 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val list = treasures.toList()
+    var result = emptySet<String>()
+    var weight = capacity
+    var cost = 0
+    for (i in list.indices) { //двигаюсь по списку предметов
+        if (weight >= list[i].second.first) {//если по весу проходит, то беру с собой, как видеокамеру
+            weight -= list[i].second.first //уменьшается вес, который я могу взять
+            cost += list[i].second.second //общая стоиисость больше
+            result += list[i].first //добавляю этот предмет в список взятых
+        } else// если след сокровище не влазит со старыми, но стоит больше старых и влазит в рюкзак, то берем вместо прошлых
+            if ((capacity >= list[i].second.first) && (cost < list[i].second.second)){
+                cost = list[i].second.second
+                weight = capacity - list[i].second.first
+                result = setOf(list[i].first)
+            }
+    }
+    return result
+}
