@@ -366,12 +366,11 @@ fun roman(n: Int): String {
 //просто поделю на 2 куска, чтобы сотни считать, тк они одинаково считаются, только в первую тройку надо "тысяч" дописать в массив
 fun russian(n: Int): String {
     val result = mutableListOf<String>()
-    var thousand = ""
     val special = listOf(
         "",
         "одиннадцать",
         "двенадцать",
-        "тринадцаить",
+        "тринадцать",
         "четырнадцать",
         "пятнадцать",
         "шестнадцать",
@@ -416,6 +415,18 @@ fun russian(n: Int): String {
         "восемь",
         "девять"
     )
+    val unit1 = listOf(
+        "",
+        "одна",
+        "две",
+        "три",
+        "четыре",
+        "пять",
+        "шесть",
+        "семь",
+        "восемь",
+        "девять"
+    )
     //первые 3 цифЕры
     val smallHundred = mutableListOf<String>()
     val sh = n % 1000
@@ -425,22 +436,21 @@ fun russian(n: Int): String {
     if (bh > 0) {
         bigHundred.add(hundred[bh / 100])
         if (bh % 100 in 11..19)
-            smallHundred.add(special[bh % 10])
+            bigHundred.add(special[bh % 10])
         else {
-            smallHundred.add(dec[bh / 10 % 10])
-            smallHundred.add(unit[bh % 10]) //можно было через функцию, но я забыл
+            bigHundred.add(dec[bh / 10 % 10])
+            bigHundred.add(unit1[bh % 10])
         }
     }
     result += bigHundred
-    if ((bh > 0) && (bh % 100 in 11..19))
-        thousand = "тысяч"
-    else if ((bh > 0) && (bh % 100 !in 11..19) && (bh % 10 in 2..4))
-        thousand = "тысячи"
-    else if ((bh > 0) && (bh % 100 !in 11..19) && (bh % 10 == 1))
-        thousand = "тысяча"
+    if ((bh > 0) && (bh % 100 in 11..14))// поменял с 19 на 14, тк для значений 5 и 15 thousand равны. до 14 тк если значение от 2..4 то
+        result += "тысяч"
+    else if ((bh > 0) && (bh % 100 !in 11..14) && (bh % 10 in 2..4))
+        result += "тысячи"
+    else if ((bh > 0) && (bh % 100 !in 11..14) && (bh % 10 == 1))
+        result += "тысяча"
     else if (bh > 0)
-        thousand = "тысяч"
-    result += thousand
+        result += "тысяч"
     //считаю для маленькой тройки
     if (sh > 0) {
         smallHundred.add(hundred[sh / 100])//добавил сотни
@@ -452,5 +462,5 @@ fun russian(n: Int): String {
         }
     }
     result += smallHundred
-    return result.toString()
+    return result.filter { it != "" }.joinToString(separator = " ")
 }
