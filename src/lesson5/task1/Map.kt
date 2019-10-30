@@ -94,13 +94,11 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
-    val result = mutableMapOf<Int, MutableList<String>>()
+    val result = mutableMapOf<Int, List<String>>()
     for ((student, grade) in grades)
-        if (grade in result)
-            result[grade]!!.add(student)// тут правильно !! юзать?
-        else
-            result[grade] = mutableListOf(student)
+        result[grade] = result.getOrDefault(grade, listOf()) + student
     return result
+    //спасибо за подсказку, переписал чтобы попробовать
 }
 
 /**
@@ -114,8 +112,8 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    for ((k) in a)
-        if (b[k] != a[k])
+    for ((k, v) in a)
+        if (b[k] != v)
             return false
     return true
 }
@@ -136,7 +134,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
     for ((k, v) in b)
-        if (a[k] == b[k])
+        if (a[k] == v)
             a.remove(k, v) // я убрал юнит тк идея попросила(справа полочочка жёлтая)
 }
 
@@ -174,9 +172,8 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     for ((name, number) in mapB)
         if (name !in result)
             result[name] = number
-        else
-            if (result[name] != number)
-                result[name] += ", $number"
+        else if (result[name] != number)
+            result[name] += ", $number"
     return result
 }
 
@@ -331,7 +328,7 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
             cost += list[i].second.second //общая стоиисость больше
             result += list[i].first //добавляю этот предмет в список взятых
         } else// если след сокровище не влазит со старыми, но стоит больше старых и влазит в рюкзак, то берем вместо прошлых
-            if ((capacity >= list[i].second.first) && (cost < list[i].second.second)){
+            if ((capacity >= list[i].second.first) && (cost < list[i].second.second)) {
                 cost = list[i].second.second
                 weight = capacity - list[i].second.first
                 result = setOf(list[i].first)

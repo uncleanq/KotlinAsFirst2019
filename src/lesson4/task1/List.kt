@@ -123,13 +123,10 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var result = 0.0
-    return if (v.isEmpty()) result
-    else {
-        for (i in v) result += sqr(i)
-        sqrt(result)
-    }
-}
+    for (i in v) result += sqr(i)
 
+    return sqrt(result)
+}
 
 /**
  * Простая
@@ -140,7 +137,7 @@ fun mean(list: List<Double>): Double {
     var result = 0.0
     return if (list.isEmpty()) result
     else {
-        for (i in list) result += i
+        result = list.sum()
         result / list.size
     }
 }
