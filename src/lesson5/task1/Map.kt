@@ -299,7 +299,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     for (i in list.indices)
         for (j in i + 1 until list.size)// антил чтобы за границы не выйти
             if (list[i] + list[j] == number)
-                return Pair(i,j)
+                return Pair(i, j)
     return Pair(-1, -1)
 }//постарался максимально круто написать, хотя  можно наверное через мап еще сделать, чтобы 2 цикла не писать
 
@@ -326,20 +326,23 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  */
 // надеюсь не излишне комменчу, в основном себе пишу, чтобы потом не было вопросов, почему я так сделал и тд тп
 //попробую все отдельно записать, чтобы получилось как на вики
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO() /*{
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO() /* {
     val name = mutableSetOf<String>()
     val weight = mutableListOf<Int>()
     val cost = mutableListOf<Int>()
-    val pack = mutableMapOf<Int, Int>()
+    var pack = MutableList(treasures.size + 1) { Array(capacity + 1) { 0 } }
+    //массив размерв кол-во сокровищ, содержащий массив размера вес и забитый нулясм
     for ((named, stats) in treasures) {
         name.add(named)
         weight.add(stats.first)
         cost.add(stats.second)
-    }// опять по листам пойду, не знаю как это иначе оформить, может еще придумаю
-    //я себе на пастебин залил недоделанный вар, если этот тоже неоптимальный, попробую его довести
-    for (numOfElement in 1..treasures.keys.size) {
-        for (weightOfPack in 0..capacity)
-            if (weightOfPack - weight[numOfElement] >= 0)
-                pack[]
     }
-}*/
+    for (numOfElement in 1..treasures.size)
+        for (weightOfPack in 0..capacity)
+            if (weightOfPack > weight[numOfElement])
+                pack[numOfElement][weightOfPack] = max(
+                    pack[numOfElement][weightOfPack],
+                    pack[numOfElement - 1][weightOfPack - weight[weightOfPack]] + cost[numOfElement]
+                )
+            else pack[numOfElement][weightOfPack] = pack[numOfElement - 1][weightOfPack]
+} */
