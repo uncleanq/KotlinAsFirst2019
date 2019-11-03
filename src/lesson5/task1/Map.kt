@@ -3,6 +3,7 @@
 package lesson5.task1
 
 import java.lang.Math.max
+import javax.naming.Name
 
 /**
  * Пример
@@ -294,7 +295,13 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    for (i in list.indices)
+        for (j in i + 1 until list.size)// антил чтобы за границы не выйти
+            if (list[i] + list[j] == number)
+                return Pair(i,j)
+    return Pair(-1, -1)
+}//постарался максимально круто написать, хотя  можно наверное через мап еще сделать, чтобы 2 цикла не писать
 
 /**
  * Очень сложная
@@ -317,22 +324,22 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
-    val list = treasures.toList()
-    var result = emptySet<String>()
-    var weight = capacity
-    var cost = 0
-    for (i in list.indices) { //двигаюсь по списку предметов
-        if (weight >= list[i].second.first) {//если по весу проходит, то беру с собой, как видеокамеру
-            weight -= list[i].second.first //уменьшается вес, который я могу взять
-            cost += list[i].second.second //общая стоиисость больше
-            result += list[i].first //добавляю этот предмет в список взятых
-        } else// если след сокровище не влазит со старыми, но стоит больше старых и влазит в рюкзак, то берем вместо прошлых
-            if ((capacity >= list[i].second.first) && (cost < list[i].second.second)) {
-                cost = list[i].second.second
-                weight = capacity - list[i].second.first
-                result = setOf(list[i].first)
-            }
+// надеюсь не излишне комменчу, в основном себе пишу, чтобы потом не было вопросов, почему я так сделал и тд тп
+//попробую все отдельно записать, чтобы получилось как на вики
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO() /*{
+    val name = mutableSetOf<String>()
+    val weight = mutableListOf<Int>()
+    val cost = mutableListOf<Int>()
+    val pack = mutableMapOf<Int, Int>()
+    for ((named, stats) in treasures) {
+        name.add(named)
+        weight.add(stats.first)
+        cost.add(stats.second)
+    }// опять по листам пойду, не знаю как это иначе оформить, может еще придумаю
+    //я себе на пастебин залил недоделанный вар, если этот тоже неоптимальный, попробую его довести
+    for (numOfElement in 1..treasures.keys.size) {
+        for (weightOfPack in 0..capacity)
+            if (weightOfPack - weight[numOfElement] >= 0)
+                pack[]
     }
-    return result
-}
+}*/
