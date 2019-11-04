@@ -301,7 +301,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
             if (list[i] + list[j] == number)
                 return Pair(i, j)
     return Pair(-1, -1)
-}//постарался максимально круто написать, хотя  можно наверное через мап еще сделать, чтобы 2 цикла не писать
+}
 
 /**
  * Очень сложная
@@ -325,24 +325,34 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 // надеюсь не излишне комменчу, в основном себе пишу, чтобы потом не было вопросов, почему я так сделал и тд тп
-//попробую все отдельно записать, чтобы получилось как на вики
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO() /* {
-    val name = mutableSetOf<String>()
+// попробую все отдельно записать, чтобы получилось как на вики
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val result = mutableSetOf<String>()
+    val name = mutableListOf<String>()
     val weight = mutableListOf<Int>()
     val cost = mutableListOf<Int>()
-    var pack = MutableList(treasures.size + 1) { Array(capacity + 1) { 0 } }
-    //массив размерв кол-во сокровищ, содержащий массив размера вес и забитый нулясм
+    val pack = MutableList(treasures.size + 1) { MutableList(capacity + 1) { 0 } }
+    // про такой лист прочитал на metaint(в процессе гуглинга двумерных массивов нашел)
     for ((named, stats) in treasures) {
         name.add(named)
         weight.add(stats.first)
         cost.add(stats.second)
     }
-    for (numOfElement in 1..treasures.size)
-        for (weightOfPack in 0..capacity)
-            if (weightOfPack > weight[numOfElement])
-                pack[numOfElement][weightOfPack] = max(
+    for (numOfElement in 1..pack.size)
+        for (weightOfPack in 1..capacity)
+            if (weightOfPack > weight[numOfElement])// не понимаю, почему тут выход за границы, из-за этого не могу доделать вывод
+                pack[numOfElement][weightOfPack] = maxOf(
                     pack[numOfElement][weightOfPack],
-                    pack[numOfElement - 1][weightOfPack - weight[weightOfPack]] + cost[numOfElement]
+                    (pack[numOfElement - 1][weightOfPack - weight[weightOfPack]] + cost[numOfElement])
                 )
             else pack[numOfElement][weightOfPack] = pack[numOfElement - 1][weightOfPack]
-} */
+    //отедельный цикл для вывода( не доделал, просто написао пока что думаю, все равно ошибка в выходе за границы
+    var nowWeight = capacity
+    for (num in 1..pack.size)
+        while (nowWeight > 0)
+            if (pack[num][nowWeight] != pack[num - 1][nowWeight]) {
+                result.add(name[pack.size - num])
+                nowWeight -= weight[pack.size - num]
+            }
+    return result
+}
