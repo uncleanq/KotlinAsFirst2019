@@ -3,9 +3,6 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
-import lesson5.task1.averageStockPrice //эта штука не сломалась?
-import java.lang.Integer.max
-import java.lang.Math.sqrt
 import kotlin.math.abs
 
 /**
@@ -41,7 +38,12 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int = TODO()
+fun daysInMonth(month: Int, year: Int): Int = when (month) {
+    2 -> if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0))) 29
+    else 28
+    4, 6, 9, 11 -> 30
+    else -> 31
+}
 
 /**
  * Средняя

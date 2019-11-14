@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+import java.lang.String.format
+
 /**
  * Пример
  *
@@ -60,16 +63,42 @@ fun main() {
 
 /**
  * Средняя
- *
  * Дата представлена строкой вида "15 июля 2016".
  * Перевести её в цифровой формат "15.07.2016".
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
+ *
  * При неверном формате входной строки вернуть пустую строку.
  *
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ") //делится пробелами
+    if (parts.size != 3)
+        return ""
+    val year = parts[2].toInt()
+    val month = when (parts[1]) {
+        "январь" -> 1
+        "февраля" -> 2
+        "марта" -> 3
+        "апреля" -> 4
+        "мая" -> 5
+        "июня" -> 6
+        "июля" -> 7
+        "августа" -> 8
+        "сентября" -> 9
+        "октября" -> 10
+        "ноября" -> 11
+        "декаюря" -> 12
+        else -> return ""
+    }
+    val day = parts[0].toInt()
+    return if ((daysInMonth(month, year) >= day))
+    //да, я правда решил задачу второго лессона чтобы не писать большое условие)
+        format("%02d.%02d.%d", day, month, year)
+    else
+        ""
+}
 
 /**
  * Средняя
@@ -81,7 +110,32 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    if (parts.size != 3)
+        return ""
+    val year = parts[2]
+    val month = when (parts[1]) {
+        "01" -> "январь"
+        "02" -> "февраля"
+        "03" -> "марта"
+        "04" -> "апреля"
+        "05" -> "мая"
+        "06" -> "июня"
+        "07" -> "июля"
+        "08" -> "августа"
+        "09" -> "сентября"
+        "10" -> "октября"
+        "11" -> "ноября"
+        "12" -> "декаюря"
+        else -> return ""
+    }
+    val day = parts[0].toInt()
+    return if ((daysInMonth(parts[1].toInt(), parts[2].toInt()) >= day))
+        format("%d %s %s", day, month, year)
+    else
+        ""
+}
 
 /**
  * Средняя

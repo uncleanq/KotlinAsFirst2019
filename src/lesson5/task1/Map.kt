@@ -2,9 +2,6 @@
 
 package lesson5.task1
 
-import java.lang.Math.max
-import javax.naming.Name
-
 /**
  * Пример
  *
@@ -136,7 +133,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
     for ((k, v) in b)
         if (a[k] == v)
-            a.remove(k, v) // я убрал юнит тк идея попросила(справа полочочка жёлтая)
+            a.remove(k, v)
 }
 
 /**
@@ -205,7 +202,9 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    TODO()
+}
 
 /**
  * Средняя
@@ -238,7 +237,7 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
         else
             result[k] = 1
     }
-    return result.filter { it.value > 1 }// спасибо лекции, действительно можно писать более удобные и правильные проги
+    return result.filter { it.value > 1 }
 }
 
 /**
@@ -276,7 +275,9 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *          "Mikhail" to setOf("Sveta", "Marat")
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> {
+    TODO()
+}
 
 /**
  * Сложная
@@ -324,9 +325,15 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-// надеюсь не излишне комменчу, в основном себе пишу, чтобы потом не было вопросов, почему я так сделал и тд тп
 // попробую все отдельно записать, чтобы получилось как на вики
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO() /*{
+обратил внимаание на ваш коментарий еще раз и решил попробовать сделать все с прошлым элементом
+на вики итмо вывод через рекурсию, решил сдлеать что-то подобное тк никогда так не делал
+и стоило бы поробовать потренироваться что ли
+
+основной цикл вроде проходит, не знаю насколько правильно - выводитится пустой сет, возмиожно стоит написать нормально вывод и будет норм
+хотя конечно хотелось бы освоить и рекурсию
+
     val result = mutableSetOf<String>()
     val name = mutableListOf<String>()
     val weight = mutableListOf<Int>()
@@ -338,21 +345,24 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         weight.add(stats.first)
         cost.add(stats.second)
     }
-    for (numOfElement in 1..pack.size)
-        for (weightOfPack in 1..capacity)
-            if (weightOfPack > weight[numOfElement])// не понимаю, почему тут выход за границы, из-за этого не могу доделать вывод
+    for (numOfElement in 1..name.size)
+        for (weightOfPack in 1..capacity) {
+            if (weightOfPack >= weight[numOfElement - 1])
                 pack[numOfElement][weightOfPack] = maxOf(
-                    pack[numOfElement][weightOfPack],
-                    (pack[numOfElement - 1][weightOfPack - weight[weightOfPack]] + cost[numOfElement])
+                    pack[numOfElement - 1][weightOfPack],
+                    (pack[numOfElement - 1][weightOfPack - weight[numOfElement - 1]] + cost[numOfElement - 1])
                 )
-            else pack[numOfElement][weightOfPack] = pack[numOfElement - 1][weightOfPack]
-    //отедельный цикл для вывода( не доделал, просто написао пока что думаю, все равно ошибка в выходе за границы
-    var nowWeight = capacity
-    for (num in 1..pack.size)
-        while (nowWeight > 0)
-            if (pack[num][nowWeight] != pack[num - 1][nowWeight]) {
-                result.add(name[pack.size - num])
-                nowWeight -= weight[pack.size - num]
-            }
+        }
+    fun resulti(nowItem: Int, nowWeight: Int) {
+        if (pack[nowItem][nowWeight] == 0)
+            return
+        if (pack[nowItem - 1][nowWeight] == pack[nowItem][nowWeight])
+            resulti(nowItem - 1, nowWeight)
+        else {
+            resulti(nowItem - 1, nowWeight - weight[nowItem])
+            result.add(name[nowItem])
+        }
+    }
+    resulti(treasures.size, capacity)
     return result
-}
+*/
