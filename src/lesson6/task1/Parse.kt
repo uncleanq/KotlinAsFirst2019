@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.lang.NumberFormatException
 import java.lang.String.format
 
 /**
@@ -114,27 +115,31 @@ fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
     if (parts.size != 3)
         return ""
-    val year = parts[2]
-    val month = when (parts[1]) {
-        "01" -> "января"
-        "02" -> "февраля"
-        "03" -> "марта"
-        "04" -> "апреля"
-        "05" -> "мая"
-        "06" -> "июня"
-        "07" -> "июля"
-        "08" -> "августа"
-        "09" -> "сентября"
-        "10" -> "октября"
-        "11" -> "ноября"
-        "12" -> "декабря"
-        else -> return ""
+    try {
+        val year = parts[2]
+        val month = when (parts[1]) {
+            "01" -> "января"
+            "02" -> "февраля"
+            "03" -> "марта"
+            "04" -> "апреля"
+            "05" -> "мая"
+            "06" -> "июня"
+            "07" -> "июля"
+            "08" -> "августа"
+            "09" -> "сентября"
+            "10" -> "октября"
+            "11" -> "ноября"
+            "12" -> "декабря"
+            else -> return ""
+        }
+        val day = parts[0].toInt()
+        return if ((daysInMonth(parts[1].toInt(), parts[2].toInt()) >= day))
+            format("%d %s %s", day, month, year)
+        else
+            ""
+    } catch (e: NumberFormatException) {
+        return ""
     }
-    val day = parts[0].toInt()
-    return if ((daysInMonth(parts[1].toInt(), parts[2].toInt()) >= day))
-        format("%d %s %s", day, month, year)
-    else
-        ""
 }
 
 /**
