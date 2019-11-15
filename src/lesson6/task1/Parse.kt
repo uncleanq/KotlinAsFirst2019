@@ -89,7 +89,7 @@ fun dateStrToDigit(str: String): String {
         "сентября" -> 9
         "октября" -> 10
         "ноября" -> 11
-        "декаюря" -> 12
+        "декабря" -> 12
         else -> return ""
     }
     val day = parts[0].toInt()
@@ -127,7 +127,7 @@ fun dateDigitToStr(digital: String): String {
         "09" -> "сентября"
         "10" -> "октября"
         "11" -> "ноября"
-        "12" -> "декаюря"
+        "12" -> "декабря"
         else -> return ""
     }
     val day = parts[0].toInt()
