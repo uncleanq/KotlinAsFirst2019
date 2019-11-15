@@ -78,7 +78,7 @@ fun dateStrToDigit(str: String): String {
         return ""
     val year = parts[2].toInt()
     val month = when (parts[1]) {
-        "январь" -> 1
+        "января" -> 1
         "февраля" -> 2
         "марта" -> 3
         "апреля" -> 4
@@ -116,7 +116,7 @@ fun dateDigitToStr(digital: String): String {
         return ""
     val year = parts[2]
     val month = when (parts[1]) {
-        "01" -> "январь"
+        "01" -> "января"
         "02" -> "февраля"
         "03" -> "марта"
         "04" -> "апреля"
