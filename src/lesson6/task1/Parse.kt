@@ -77,28 +77,32 @@ fun dateStrToDigit(str: String): String {
     val parts = str.split(" ") //делится пробелами
     if (parts.size != 3)
         return ""
-    val year = parts[2].toInt()
-    val month = when (parts[1]) {
-        "января" -> 1
-        "февраля" -> 2
-        "марта" -> 3
-        "апреля" -> 4
-        "мая" -> 5
-        "июня" -> 6
-        "июля" -> 7
-        "августа" -> 8
-        "сентября" -> 9
-        "октября" -> 10
-        "ноября" -> 11
-        "декабря" -> 12
-        else -> return ""
+    try {
+        val year = parts[2].toInt()
+        val month = when (parts[1]) {
+            "января" -> 1
+            "февраля" -> 2
+            "марта" -> 3
+            "апреля" -> 4
+            "мая" -> 5
+            "июня" -> 6
+            "июля" -> 7
+            "августа" -> 8
+            "сентября" -> 9
+            "октября" -> 10
+            "ноября" -> 11
+            "декабря" -> 12
+            else -> return ""
+        }
+        val day = parts[0].toInt()
+        return if ((daysInMonth(month, year) >= day))
+        //да, я правда решил задачу второго лессона чтобы не писать большое условие)
+            format("%02d.%02d.%d", day, month, year)
+        else
+            ""
+    } catch (e: NumberFormatException) {
+        return ""
     }
-    val day = parts[0].toInt()
-    return if ((daysInMonth(month, year) >= day))
-    //да, я правда решил задачу второго лессона чтобы не писать большое условие)
-        format("%02d.%02d.%d", day, month, year)
-    else
-        ""
 }
 
 /**
@@ -156,7 +160,9 @@ fun dateDigitToStr(digital: String): String {
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    TODO()
+}
 
 /**
  * Средняя
