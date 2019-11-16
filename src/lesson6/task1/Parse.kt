@@ -161,7 +161,22 @@ fun dateDigitToStr(digital: String): String {
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String {
-    TODO()
+    var result = ""
+    phone.filter { it != '-' && it != ' ' }//убираю лишние пробелы и чёрточки
+    if (phone.contains('(') || phone.contains(')')) {
+        // если содержатся скобки в заданном выражении(не могу их убрать тк они легальны)
+        if (Regex("""^\+?\d*\((\d)+\)\d+""").matches(phone))
+        //если начинается с "+", цифры, далее скобка, кол-во цифр (мин 1), скобка, цифры мин 1
+            for (num in phone)
+                if (num == '+' || num in '0'..'9')
+                    result += num
+        // записываю в ресалт значения
+    } else
+        if (Regex("""^\+?\d+""").matches(phone))
+            for (num in phone)
+                if (num == '+' || num in '0'..'9')
+                    result += num
+}
 }
 
 /**
