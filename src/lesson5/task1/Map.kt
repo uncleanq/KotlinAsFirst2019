@@ -326,14 +326,7 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 // попробую все отдельно записать, чтобы получилось как на вики
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO() /*{
-обратил внимаание на ваш коментарий еще раз и решил попробовать сделать все с прошлым элементом
-на вики итмо вывод через рекурсию, решил сдлеать что-то подобное тк никогда так не делал
-и стоило бы поробовать потренироваться что ли
-
-основной цикл вроде проходит, не знаю насколько правильно - выводитится пустой сет, возмиожно стоит написать нормально вывод и будет норм
-хотя конечно хотелось бы освоить и рекурсию
-
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO() /* {
     val result = mutableSetOf<String>()
     val name = mutableListOf<String>()
     val weight = mutableListOf<Int>()
@@ -365,4 +358,4 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     }
     resulti(treasures.size, capacity)
     return result
-*/
+} */

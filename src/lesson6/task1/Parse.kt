@@ -160,12 +160,12 @@ fun dateDigitToStr(digital: String): String {
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String {
+fun flattenPhoneNumber(phone: String): String = TODO() /*{
     var result = ""
     phone.filter { it != '-' && it != ' ' }//убираю лишние пробелы и чёрточки
     if (phone.contains('(') || phone.contains(')')) {
         // если содержатся скобки в заданном выражении(не могу их убрать тк они легальны)
-        if (Regex("""^\+?\d*\((\d)+\)\d+""").matches(phone))
+        if (Regex("""^\+?\d*\(\d+\)\d+""").matches(phone))
         //если начинается с "+", цифры, далее скобка, кол-во цифр (мин 1), скобка, цифры мин 1
             for (num in phone)
                 if (num == '+' || num in '0'..'9')
@@ -178,6 +178,7 @@ fun flattenPhoneNumber(phone: String): String {
                     result += num
 }
 }
+*/
 
 /**
  * Средняя
@@ -189,7 +190,18 @@ fun flattenPhoneNumber(phone: String): String {
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    var max = -1
+    if (Regex("""[^\s\d-%]""").find(jumps) != null)
+        return max
+    //проверка на ненужные символы
+    for (jump in jumps.split(" "))
+    //прыжки разделены проблелами
+        if (Regex("""\d+[^-%]""").matches(jump))
+        //если один прижок являтся числами, но не знаками, то
+            max = maxOf(max, jump.toInt())
+    return max
+}
 
 /**
  * Сложная
@@ -202,7 +214,19 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var max = -1
+    if (Regex("""[^\s\d-%+]""").find(jumps) != null)
+        return max
+    //проверка на ненужные символы
+    for (num in jumps.split(" ").indices)
+    //прыжки разделены проблелами, но теперь между ними еще и плюсы
+        if (Regex("""\d+""").matches(jumps.split(" ")[num]) &&
+            Regex("""\+""").matches(jumps.split(" ")[num + 1])
+        )//если один прижок являтся числами,а след знак это "+"
+            max = maxOf(max, jumps.split(" ")[num].toInt())
+    return max
+}
 
 /**
  * Сложная
@@ -213,7 +237,18 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int = TODO()/* {
+    when {
+        expression.isEmpty() -> throw IllegalArgumentException(expression)
+        Regex("""^+""").matches(expression) -> throw IllegalArgumentException(expression)
+        Regex("""-\s-""").matches(expression) -> throw IllegalArgumentException(expression)
+        Regex("""\+\s-""").matches(expression) -> throw IllegalArgumentException(expression)
+        Regex("""-\s\+""").matches(expression) -> throw IllegalArgumentException(expression)
+        //записал ошибки, пока только те что в тестах
+        //а вообще можжно же общую запись сделать
+    }
+}
+*/
 
 /**
  * Сложная
