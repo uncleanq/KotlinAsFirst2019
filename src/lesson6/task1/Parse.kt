@@ -237,18 +237,25 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()/* {
-    when {
-        expression.isEmpty() -> throw IllegalArgumentException(expression)
-        Regex("""^+""").matches(expression) -> throw IllegalArgumentException(expression)
-        Regex("""-\s-""").matches(expression) -> throw IllegalArgumentException(expression)
-        Regex("""\+\s-""").matches(expression) -> throw IllegalArgumentException(expression)
-        Regex("""-\s\+""").matches(expression) -> throw IllegalArgumentException(expression)
-        //записал ошибки, пока только те что в тестах
-        //а вообще можжно же общую запись сделать
-    }
+fun plusMinus(expression: String): Int {
+    //require(Regex("""^\d+(\s[+|-]\s\d)*""").find(expression) != null) { "kavo" }
+    //начинается с числа, дальшн * сочетаний (пробел, плюс или минус, число). не знаю как убрать двойной знак
+    // спасибо идее за подсказку с "require", но общее написать у меня не получается. напишу отдельно
+    require(Regex("""^\+""").find(expression) == null) { "kavo" }
+    require(Regex("""- -""").find(expression) == null)
+    require(Regex("""-\s\+""").find(expression) == null) { "kavo" }
+    if (expression.split(" ").size == 1)
+        return expression.toInt()
+    var result = expression.split(" ")[0].toInt()
+    for (num in 2 until expression.split(" ").size step 2)
+    //топаю по числам, первое число добавил(метод как в прошлом задании выходит за границы(спросить почему!)
+    //смотрю на прошлый знак и в зависимости от этого действую
+        if (Regex("""\+""").matches(expression.split(" ")[num - 1]))
+            result += expression.split(" ")[num].toInt()
+        else if (Regex("""-""").matches(expression.split(" ")[num - 1])
+        ) result -= expression.split(" ")[num].toInt()
+    return result
 }
-*/
 
 /**
  * Сложная
