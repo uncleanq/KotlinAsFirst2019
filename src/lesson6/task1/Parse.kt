@@ -242,23 +242,25 @@ fun plusMinus(expression: String): Int {
     //начинается с числа, дальшн * сочетаний (пробел, плюс или минус, число). не знаю как убрать двойной знак
     // спасибо идее за подсказку с "require", но общее написать у меня не получается. напишу отдельно
     //много ресабаю чтобы все условия учесть
-    var usable = listOf<Char>('0', '1', '2', '3', '4', '5', '6', '7', '8', '0', ' ', '+', '-')
+    val usable = listOf<Char>('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '+', '-')
     require(Regex("""^\+""").find(expression) == null)
     require(Regex("""- -""").find(expression) == null)
     require(Regex("""-\s\+""").find(expression) == null)
     require(expression.isNotEmpty())
     for (words in expression)
         require(words in usable)
-    if (expression.split(" ").size == 1)
-        return expression.toInt()
+
     var result = expression.split(" ")[0].toInt()
-    for (num in 2 until expression.split(" ").size step 2)
-    //топаю по числам, первое число добавил(метод как в прошлом задании выходит за границы(спросить почему!)
-    //смотрю на прошлый знак и в зависимости от этого действую
-        if (Regex("""\+""").matches(expression.split(" ")[num - 1]))
-            result += expression.split(" ")[num].toInt()
-        else if (Regex("""-""").matches(expression.split(" ")[num - 1])
-        ) result -= expression.split(" ")[num].toInt()
+    if (expression.split(" ").size == 1)
+        return result
+    else
+        for (num in 2 until expression.split(" ").size step 2)
+        //топаю по числам, первое число добавил(метод как в прошлом задании выходит за границы(спросить почему!)
+        //смотрю на прошлый знак и в зависимости от этого действую
+            if (Regex("""\+""").matches(expression.split(" ")[num - 1]))
+                result += expression.split(" ")[num].toInt()
+            else if (Regex("""-""").matches(expression.split(" ")[num - 1])
+            ) result -= expression.split(" ")[num].toInt()
     return result
 }
 
