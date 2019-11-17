@@ -244,6 +244,7 @@ fun plusMinus(expression: String): Int {
     require(Regex("""^\+""").find(expression) == null) { "kavo" }
     require(Regex("""- -""").find(expression) == null)
     require(Regex("""-\s\+""").find(expression) == null) { "kavo" }
+    require(expression.isNotEmpty())
     if (expression.split(" ").size == 1)
         return expression.toInt()
     var result = expression.split(" ")[0].toInt()
