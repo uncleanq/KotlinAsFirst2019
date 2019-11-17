@@ -241,10 +241,11 @@ fun plusMinus(expression: String): Int {
     //require(Regex("""^\d+(\s[+|-]\s\d)*""").find(expression) != null) { "kavo" }
     //начинается с числа, дальшн * сочетаний (пробел, плюс или минус, число). не знаю как убрать двойной знак
     // спасибо идее за подсказку с "require", но общее написать у меня не получается. напишу отдельно
-    require(Regex("""^\+""").find(expression) == null) { "kavo" }
+    require(Regex("""^\+""").find(expression) == null)
     require(Regex("""- -""").find(expression) == null)
-    require(Regex("""-\s\+""").find(expression) == null) { "kavo" }
+    require(Regex("""-\s\+""").find(expression) == null)
     require(expression.isNotEmpty())
+    require(Regex("""[^a-z]""").find(expression) == null)
     if (expression.split(" ").size == 1)
         return expression.toInt()
     var result = expression.split(" ")[0].toInt()
