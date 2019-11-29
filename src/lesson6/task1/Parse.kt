@@ -160,25 +160,24 @@ fun dateDigitToStr(digital: String): String {
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO() /*{
+fun flattenPhoneNumber(phone: String): String {
     var result = ""
-    phone.filter { it != '-' && it != ' ' }//убираю лишние пробелы и чёрточки
-    if (phone.contains('(') || phone.contains(')')) {
+    val phoned = phone.filter { it != '-' && it != ' ' }//убираю лишние пробелы и чёрточки
+    if (phoned.contains('(') || phoned.contains(')')) {
         // если содержатся скобки в заданном выражении(не могу их убрать тк они легальны)
-        if (Regex("""^\+?\d*\(\d+\)\d+""").matches(phone))
+        if (Regex("""^\+?\d*\(\d+\)\d+""").matches(phoned))
         //если начинается с "+", цифры, далее скобка, кол-во цифр (мин 1), скобка, цифры мин 1
-            for (num in phone)
+            for (num in phoned)
                 if (num == '+' || num in '0'..'9')
                     result += num
         // записываю в ресалт значения
     } else
-        if (Regex("""^\+?\d+""").matches(phone))
-            for (num in phone)
+        if (Regex("""^\+?\d+""").matches(phoned))
+            for (num in phoned)
                 if (num == '+' || num in '0'..'9')
                     result += num
+    return result
 }
-}
-*/
 
 /**
  * Средняя
@@ -242,7 +241,7 @@ fun plusMinus(expression: String): Int {
     //начинается с числа, дальшн * сочетаний (пробел, плюс или минус, число). не знаю как убрать двойной знак
     // спасибо идее за подсказку с "require", но общее написать у меня не получается. напишу отдельно
     //много ресабаю чтобы все условия учесть
-    val usable = listOf<Char>('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '+', '-')
+    val usable = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '+', '-')
     require(Regex("""^\+""").find(expression) == null)
     require(Regex("""- -""").find(expression) == null)
     require(Regex("""-\s\+""").find(expression) == null)

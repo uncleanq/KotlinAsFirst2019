@@ -325,37 +325,4 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-// попробую все отдельно записать, чтобы получилось как на вики
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO() /* {
-    val result = mutableSetOf<String>()
-    val name = mutableListOf<String>()
-    val weight = mutableListOf<Int>()
-    val cost = mutableListOf<Int>()
-    val pack = MutableList(treasures.size + 1) { MutableList(capacity + 1) { 0 } }
-    // про такой лист прочитал на metaint(в процессе гуглинга двумерных массивов нашел)
-    for ((named, stats) in treasures) {
-        name.add(named)
-        weight.add(stats.first)
-        cost.add(stats.second)
-    }
-    for (numOfElement in 1..name.size)
-        for (weightOfPack in 1..capacity) {
-            if (weightOfPack >= weight[numOfElement - 1])
-                pack[numOfElement][weightOfPack] = maxOf(
-                    pack[numOfElement - 1][weightOfPack],
-                    (pack[numOfElement - 1][weightOfPack - weight[numOfElement - 1]] + cost[numOfElement - 1])
-                )
-        }
-    fun resulti(nowItem: Int, nowWeight: Int) {
-        if (pack[nowItem][nowWeight] == 0)
-            return
-        if (pack[nowItem - 1][nowWeight] == pack[nowItem][nowWeight])
-            resulti(nowItem - 1, nowWeight)
-        else {
-            resulti(nowItem - 1, nowWeight - weight[nowItem])
-            result.add(name[nowItem])
-        }
-    }
-    resulti(treasures.size, capacity)
-    return result
-} */
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
