@@ -246,6 +246,7 @@ fun plusMinus(expression: String): Int {
     require(Regex("""- -""").find(expression) == null)
     require(Regex("""-\s\+""").find(expression) == null)
     require(expression.isNotEmpty())
+    require(Regex("""^-""").find(expression) == null)
     for (words in expression)
         require(words in usable)
 
