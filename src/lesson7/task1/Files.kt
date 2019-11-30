@@ -123,13 +123,14 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    var maxL = -1
     File(outputName).bufferedWriter().use {
-        for (lines in File(inputName).readLines()) {
-            Regex("""^(\s+)""").split(lines)//убираю пробелы
-            maxL = max(lines.length, maxL)//нашел максимальную длину
+        var maxL = -1
+        val formatFile = File(inputName).readLines().toMutableList()
+        for (num in formatFile.indices) {
+            formatFile[num] = Regex("""^(\s+)""").replace(formatFile[num], "")
+            maxL = max(formatFile[num].length, maxL)//нашел максимальную длину
         }
-        for (lines in File(inputName).readLines()) {
+        for (lines in formatFile) {
             for (count in 1..(maxL - lines.length) / 2)
                 it.write(" ")
             it.write(lines)
