@@ -127,7 +127,7 @@ fun centerFile(inputName: String, outputName: String) {
         var maxL = -1
         val formatFile = File(inputName).readLines().toMutableList()
         for (num in formatFile.indices) {
-            formatFile[num] = Regex("""^(\s+)""").replace(formatFile[num], "")
+            formatFile[num] = formatFile[num].trim()
             maxL = max(formatFile[num].length, maxL)//нашел максимальную длину
         }
         for (lines in formatFile) {
