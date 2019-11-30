@@ -243,13 +243,13 @@ fun plusMinus(expression: String): Int {
     //много ресабаю чтобы все условия учесть
     val usable = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '+', '-')
     require(Regex("""^\+""").find(expression) == null)
+    // а как сделать "не matches?" так же лучше будет чем кучу нулов писать
     require(Regex("""- -""").find(expression) == null)
     require(Regex("""-\s\+""").find(expression) == null)
     require(expression.isNotEmpty())
     require(Regex("""^-""").find(expression) == null)
     for (words in expression)
         require(words in usable)
-
     var result = expression.split(" ")[0].toInt()
     if (expression.split(" ").size == 1)
         return result

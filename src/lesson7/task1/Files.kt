@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import kotlin.math.max
 
 /**
  * Пример
@@ -54,7 +55,7 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  *
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
-    var result = mutableMapOf<String, Int>()
+    val result = mutableMapOf<String, Int>()
     val filteredText = File(inputName).readText().toLowerCase()
     for (word in substrings.toSet()) //исключаю возможные повторения в substring чтобы правильно заполнить result
         result[word] = 0//заполняю кол-во вхождений нулями
@@ -122,7 +123,19 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    var maxL = -1
+    File(outputName).bufferedWriter().use {
+        for (lines in File(inputName).readLines()) {
+            Regex("""^(\s+)""").split(lines)//убираю пробелы
+            maxL = max(lines.length, maxL)//нашел максимальную длину
+        }
+        for (lines in File(inputName).readLines()) {
+            for (count in 1..(maxL - lines.length) / 2)
+                it.write(" ")
+            it.write(lines)
+            it.newLine()
+        }
+    }
 }
 
 /**
