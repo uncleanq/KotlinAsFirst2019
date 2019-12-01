@@ -74,9 +74,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
                         // и почему просто в инт нельзя сделать, я до first дошел просто перебирая предложения
                         //если время будет, подскжите, можно ли это сс помощью findAll сделать
                         result[word] = result[word]!!.plus(1)
-                    } else {
-                        break
-                    }
+                    } else break
                 } else
                 //второе условие из-за того, что Regex считает точку за любой символ
                 //поэтому проверяю ее отдельно
@@ -85,9 +83,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
                         if (matchResult != null)
                             match = matchResult.range.first + 1
                         result[word] = result[word]!!.plus(1)
-                    } else {
-                        break
-                    }
+                    } else break
         }
     return result
 }
