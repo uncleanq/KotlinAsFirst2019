@@ -70,7 +70,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
                     val matchResult = Regex(word.toLowerCase()).find(line.toLowerCase(), match)
                     if (matchResult != null) {
                         match = matchResult.range.first + 1
-                        //в чем разница между first и start?
+                        // а в чем разница между first и start?
                         // и почему просто в инт нельзя сделать, я до first дошел просто перебирая предложения
                         //если время будет, подскжите, можно ли это сс помощью findAll сделать
                         result[word] = result[word]!!.plus(1)
