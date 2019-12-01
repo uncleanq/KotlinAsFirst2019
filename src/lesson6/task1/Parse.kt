@@ -255,7 +255,8 @@ fun plusMinus(expression: String): Int {
         return result
     else
         for (num in 2 until expression.split(" ").size step 2)
-        //топаю по числам, первое число добавил(метод как в прошлом задании выходит за границы(спросить почему!)
+        //топаю по числам, первое число добавил
+        //забыл, что теперь я прошлое значение смотрю, поэтому indices нельзя юзать, как в проглой
         //смотрю на прошлый знак и в зависимости от этого действую
             if (Regex("""\+""").matches(expression.split(" ")[num - 1]))
                 result += expression.split(" ")[num].toInt()

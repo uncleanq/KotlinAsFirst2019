@@ -56,13 +56,38 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, Int>()
-    val filteredText = File(inputName).readText().toLowerCase()
     for (word in substrings.toSet()) //исключаю возможные повторения в substring чтобы правильно заполнить result
         result[word] = 0//заполняю кол-во вхождений нулями
-    for (line in filteredText.split(Regex("""\s""")))
+    for (line in File(inputName).readLines())
         for (word in substrings.toSet()) {
-            var regWord = word.toLowerCase().toRegex()
-            var kek = Regex("""regWord""")
+            var match = 0
+            while (match <= line.length)
+                if ((Regex(word.toLowerCase()).find(line.toLowerCase(), match) != null)
+                    //все в lowercase для игнора регистра
+                    //второе условие из-за того, что Regex считает точку за любой символ
+                    and (word != ".")
+                ) {
+                    val matchResult = Regex(word.toLowerCase()).find(line.toLowerCase(), match)
+                    if (matchResult != null) {
+                        match = matchResult.range.first + 1
+                        //в чем разница между first и start?
+                        // и почему просто в инт нельзя сделать, я до first дошел просто перебирая предложения
+                        //если время будет, подскжите, можно ли это сс помощью findAll сделать
+                        result[word] = result[word]!!.plus(1)
+                    } else {
+                        break
+                    }
+                } else
+                //второе условие из-за того, что Regex считает точку за любой символ
+                //поэтому проверяю ее отдельно
+                    if ((Regex(word.toLowerCase()).find(line.toLowerCase(), match) != null) and (word == ".")) {
+                        val matchResult = Regex("""\.""").find(line.toLowerCase(), match)
+                        if (matchResult != null)
+                            match = matchResult.range.first + 1
+                        result[word] = result[word]!!.plus(1)
+                    } else {
+                        break
+                    }
         }
     return result
 }
