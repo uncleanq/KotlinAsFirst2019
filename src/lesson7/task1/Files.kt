@@ -56,10 +56,11 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, Int>()
-    for (word in substrings.toSet()) //исключаю возможные повторения в substring чтобы правильно заполнить result
+    val set = substrings.toSet()
+    for (word in set) //исключаю возможные повторения в substring чтобы правильно заполнить result
         result[word] = 0//заполняю кол-во вхождений нулями
     for (line in File(inputName).readLines())
-        for (word in substrings.toSet()) {
+        for (word in set) {
             var match = 0
             while (match <= line.length)
                 if ((Regex(word.toLowerCase()).find(line.toLowerCase(), match) != null)
@@ -70,14 +71,9 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
                     val matchResult = Regex(word.toLowerCase()).find(line.toLowerCase(), match)
                     if (matchResult != null) {
                         match = matchResult.range.first + 1
-                        // а в чем разница между first и start?
-                        // и почему просто в инт нельзя сделать, я до first дошел просто перебирая предложения
-                        //если время будет, подскжите, можно ли это сс помощью findAll сделать
                         result[word] = result[word]!!.plus(1)
                     } else break
                 } else
-                //второе условие из-за того, что Regex считает точку за любой символ
-                //поэтому проверяю ее отдельно
                     if ((Regex(word.toLowerCase()).find(line.toLowerCase(), match) != null) and (word == ".")) {
                         val matchResult = Regex("""\.""").find(line.toLowerCase(), match)
                         if (matchResult != null)
@@ -105,7 +101,7 @@ fun sibilants(inputName: String, outputName: String) {
     File(outputName).bufferedWriter().use {
         for (line in File(inputName).readLines()) {
             it.write(line[0].toString())
-            for (letter in 1 until line.length) {//так лучше же чем с уже напечатанного начинать?
+            for (letter in 1 until line.length) {
                 if (Regex("""[ЖЧШЩ]""").matches(line[letter - 1].toString()) or
                     Regex("""[жчшщ]""").matches(line[letter - 1].toString())
                 ) {
@@ -188,7 +184,62 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    var max = -1
+    for (line in File(inputName).readLines())
+        max = maxOf(max, line.trim().length)//нахождение самой большой строки без пробелов вначале
+
+    File(outputName).bufferedWriter().use {
+        for (line in File(inputName).readLines()) {
+            var result = StringBuilder()
+            var countOfSpace = 0
+            var countOfSymbols = 0
+            val l = line.trim()
+            val lined = Regex("""(\s)""").split(l).toMutableList()
+            //превращаю строку в лист слов, чтобы потом адекватно добавлять пробелы
+            if (lined.size == 1) {
+                it.write(lined.joinToString())
+                it.newLine()
+                continue
+            }//для случая с строчкой "простая"
+            // мой код будет печатать(по крайней мере пока что) после нее пробелы
+            //таким образом я избавился от этого
+            for (word in lined)
+                countOfSymbols += word.length
+            // посчитал кол-во символов в строке
+            countOfSpace = (max - countOfSymbols) / (lined.size - 1)
+            //кол-во пробелов есть разница между макс длиной и длиной строки деленное на кол-во слов
+            //то-есть то, сколько пробелов надо добавить после каждого слова
+            if ((max - countOfSymbols) % (lined.size - 1) != 0)
+                lined[0] = lined[0] + " "
+            // деление целочисленное, поэтому есть шанс потерять один пробел
+            //в условии он слева, поэтому пишу его и здесь
+            // вообще я думал что все проще будет, поэтмоу это написал,уберц потом*/
+
+            for (i in (lined.indices)) {
+                if (i == lined.lastIndex) {
+                    result.append(lined[i])
+                    continue
+                }//если последний, то пропускаем тк после него пробелы не нужны и его не считали
+
+                var count = countOfSpace
+                result.append(lined[i])
+                //добавляем в строку
+                while (count != 0) {
+                    result.append(" ")
+                    count--
+                    //докинул пробел и уменьшил кол-во пробелов, что нужно еще добавить
+                }
+            }
+            //если нужно добавить пробелы.
+            for (word in result.split(Regex("""\s+""")))//нахожц слова в строке
+                if (result.length != max) {
+                    it.write()
+                }
+
+            it.write(result.toString())
+            it.newLine()
+        }
+    }
 }
 
 /**

@@ -237,17 +237,12 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    //require(Regex("""^\d+(\s[+|-]\s\d)*""").find(expression) != null) { "kavo" }
-    //начинается с числа, дальшн * сочетаний (пробел, плюс или минус, число). не знаю как убрать двойной знак
-    // спасибо идее за подсказку с "require", но общее написать у меня не получается. напишу отдельно
-    //много ресабаю чтобы все условия учесть
     val usable = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '+', '-')
-    require(Regex("""^\+""").find(expression) == null)
-    // а как сделать "не matches?" так же лучше будет чем кучу нулов писать
-    require(Regex("""- -""").find(expression) == null)
-    require(Regex("""-\s\+""").find(expression) == null)
+    require(!Regex("""^\+""").matches(expression))
+    require(!Regex("""- -""").matches(expression))
+    require(!Regex("""-\s\+""").matches(expression))
     require(expression.isNotEmpty())
-    require(Regex("""^-""").find(expression) == null)
+    require(!Regex("""^-""").matches(expression))
     for (words in expression)
         require(words in usable)
     var result = expression.split(" ")[0].toInt()
