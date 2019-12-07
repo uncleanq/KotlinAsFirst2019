@@ -193,7 +193,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             var countOfSpace = 0
             var countOfSymbols = 0
             val l = line.trim()
-            val lined = Regex("""(\s)""").split(l).toMutableList()
+            val lined = Regex("""(\s+)""").split(l).toMutableList()
             //превращаю строку в лист слов, чтобы потом адекватно добавлять пробелы
             if (lined.size == 1) {
                 it.write(lined.joinToString())
