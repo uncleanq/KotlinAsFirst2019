@@ -190,7 +190,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
 
     File(outputName).bufferedWriter().use {
         for (line in File(inputName).readLines()) {
-            var result = StringBuilder()
             var countOfSpace = 0
             var countOfSymbols = 0
             val l = line.trim()
@@ -215,28 +214,24 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             //в условии он слева, поэтому пишу его и здесь
             // вообще я думал что все проще будет, поэтмоу это написал,уберц потом*/
 
-            for (i in (lined.indices)) {
+            for (i in lined.indices) {
                 if (i == lined.lastIndex) {
-                    result.append(lined[i])
                     continue
                 }//если последний, то пропускаем тк после него пробелы не нужны и его не считали
-
                 var count = countOfSpace
-                result.append(lined[i])
-                //добавляем в строку
                 while (count != 0) {
-                    result.append(" ")
+                    lined[i] += " "
                     count--
                     //докинул пробел и уменьшил кол-во пробелов, что нужно еще добавить
                 }
             }
             //если нужно добавить пробелы.
-            for (word in result.split(Regex("""\s+""")))//нахожц слова в строке
-                if (result.length != max) {
-                    it.write()
-                }
-
-            it.write(result.toString())
+            for (i in lined.indices) {
+                val length = lined.joinToString(separator = "").length
+                if (max != length)
+                    lined[i] += " "
+            }
+            it.write(lined.joinToString(separator = ""))
             it.newLine()
         }
     }

@@ -238,11 +238,12 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     val usable = listOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '+', '-')
-    require(!Regex("""^\+""").matches(expression))
-    require(!Regex("""- -""").matches(expression))
-    require(!Regex("""-\s\+""").matches(expression))
+    require(Regex("""^\+""").find(expression) == null)
+    // а как сделать "не matches?" так же лучше будет чем кучу нулов писать
+    require(Regex("""- -""").find(expression) == null)
+    require(Regex("""-\s\+""").find(expression) == null)
     require(expression.isNotEmpty())
-    require(!Regex("""^-""").matches(expression))
+    require(Regex("""^-""").find(expression) == null)
     for (words in expression)
         require(words in usable)
     var result = expression.split(" ")[0].toInt()
