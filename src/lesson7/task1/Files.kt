@@ -208,11 +208,6 @@ fun alignFileByWidth(inputName: String, outputName: String) {
             countOfSpace = (max - countOfSymbols) / (lined.size - 1)
             //кол-во пробелов есть разница между макс длиной и длиной строки деленное на кол-во слов
             //то-есть то, сколько пробелов надо добавить после каждого слова
-            if ((max - countOfSymbols) % (lined.size - 1) != 0)
-                lined[0] = lined[0] + " "
-            // деление целочисленное, поэтому есть шанс потерять один пробел
-            //в условии он слева, поэтому пишу его и здесь
-            // вообще я думал что все проще будет, поэтмоу это написал,уберц потом*/
 
             for (i in lined.indices) {
                 if (i == lined.lastIndex) {
