@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.util.*
 import kotlin.math.max
 
 /**
@@ -66,7 +67,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
                 if ((Regex(word.toLowerCase()).find(line.toLowerCase(), match) != null)
                     //все в lowercase для игнора регистра
                     //второе условие из-за того, что Regex считает точку за любой символ
-                    and (word != ".")
+                    && (word != ".")
                 ) {
                     val matchResult = Regex(word.toLowerCase()).find(line.toLowerCase(), match)
                     if (matchResult != null) {
@@ -74,7 +75,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
                         result[word] = result[word]!!.plus(1)
                     } else break
                 } else
-                    if ((Regex(word.toLowerCase()).find(line.toLowerCase(), match) != null) and (word == ".")) {
+                    if ((Regex(word.toLowerCase()).find(line.toLowerCase(), match) != null) && (word == ".")) {
                         val matchResult = Regex("""\.""").find(line.toLowerCase(), match)
                         if (matchResult != null)
                             match = matchResult.range.first + 1
@@ -190,7 +191,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
 
     File(outputName).bufferedWriter().use {
         for (line in File(inputName).readLines()) {
-            var countOfSpace = 0
+            var countOfSpace: Int
             var countOfSymbols = 0
             val l = line.trim()
             val lined = Regex("""(\s+)""").split(l).toMutableList()
@@ -320,9 +321,10 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
         var max = -1
         val list = mutableListOf<String>()
         for (lines in File(inputName).readLines())
-            if (lines.toLowerCase().toList().size == lines.toLowerCase().toSet().size) { // проверка на одинаковость
-                list += (lines)//заполнил всеми разными
+            if (lines.toLowerCase().length == lines.toLowerCase().toSet().size) { // проверка на одинаковость
                 max = maxOf(max, lines.length)//нашел самое большое
+                if (max == lines.length)
+                    list += (lines)//заполнил всеми разными
             }
         bufferedWriter.write(list.filter { it.length == max }.joinToString(", "))
     }
@@ -374,7 +376,75 @@ Suspendisse <s>et elit in enim tempus iaculis</s>.
  * (Отступы и переносы строк в примере добавлены для наглядности, при решении задачи их реализовывать не обязательно)
  */
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
-    TODO()
+    val stack = Stack<String>()
+    stack.add("<html>")
+    stack.add("<body>")
+    var b = false
+    var i = false
+    var s = false
+    File(outputName).bufferedWriter().use {
+        for (j in stack)
+            it.write(j)
+        //вывод первоначальных строк
+
+        //условие на одну ТОЛЬКО звездочку
+        for (lines in File(inputName).readLines()) {
+            it.write("<p>")
+            if (Regex("""(?<!\*)\*(?!\*)""").containsMatchIn(lines))//
+                if (!b) {
+                    //если не было присутствия полужира пишем его начало
+                    Regex("""(?<!\*)\*(?!\*)""").replaceFirst(lines, "<b>")
+                    b = true
+                    //обозначаю, что начало присутствует
+                } else if (b) {
+                    Regex("""(?<!\*)\*(?!\*)""").replaceFirst(lines, "</b>")
+                    b = false
+                    //этим обозначаю что  полужир кончился
+                }
+
+            //условие на полужир кончилось
+            //началось на курсив - регекс ищет только 2!
+
+            if (Regex("""(?<!\*)\*\*(?!\*)""").containsMatchIn(lines))
+                if (!i) {
+                    //если не было присутствия курсива пишем его начало
+                    Regex("""(?<!\*)\*\*(?!\*)""").replaceFirst(lines, "<i>")
+                    i = true
+                    //обозначаю, что начало присутствует
+                } else if (i) {
+                    Regex("""(?<!\*)\*\*(?!\*)""").replaceFirst(lines, "</i>")
+                    i = false
+                    //этим обозначаю что курсив кончился
+                }
+            //ну наконеч на 3 звездочки, супер тяж остался
+            if (Regex("""(?<!\*)\*\*\*(?!\*)""").containsMatchIn(lines))
+                if (b == false and i) {
+                    //если отсутствуют пажилые начала и нашлись три звездочки - начинаем
+                    Regex("""(?<!\*)\*\*\*(?!\*)""").replaceFirst(lines, "<b><i>")
+                    i = true
+                    b = true
+                } else if (b != false and i) {
+                    Regex("""(?<!\*)\*\*\*(?!\*)""").replaceFirst(lines, "</b></i>")
+                    i = false
+                    b = false
+                }
+            if (Regex("""~~""").containsMatchIn(lines))
+                if (!s) {
+                    //если не было присутствия почеркушки пишем ее начало
+                    Regex("""~~""").replaceFirst(lines, "<s>")
+                    s = true
+                    //обозначаю, что начало присутствует
+                } else if (s) {
+                    Regex("""~~""").replaceFirst(lines, "</s>")
+                    s = false
+                    //этим обозначаю что кончилась
+                }
+            it.write(lines)
+            it.write("/p")
+        }
+        it.write("/body")
+        it.write("/html")
+    }
 }
 
 /**
