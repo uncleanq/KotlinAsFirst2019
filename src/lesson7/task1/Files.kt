@@ -390,71 +390,73 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
         //вывод первоначальных строк
         //условие на одну ТОЛЬКО звездочку
         for (lines in File(inputName).readLines()) {
-            if (lines.isEmpty() and empty) {
-                it.write("</p>")
-                it.write("<p>")
-                empty = false
-            }
-            var line = lines
-            while (Regex("""\*|(~~)""").find(line) != null) {
-                if (Regex("""(?<!\*)\*(?!\*)""").containsMatchIn(line) && (!i)) {
-                    //если не было присутствия полужира пишем его начало
-                    line = Regex("""(?<!\*)\*(?!\*)""").replaceFirst(line, "<i>")
-                    i = true
-                    empty = true
-                    //обозначаю, что начало присутствует
+            if (lines.isEmpty()) {
+                if (empty) {
+                    it.write("</p>")
+                    it.write("<p>")
+                    empty = false
                 }
-                if (Regex("""(?<!\*)\*(?!\*)""").containsMatchIn(line) && (i)) {
-                    line = Regex("""(?<!\*)\*(?!\*)""").replaceFirst(line, "</i>")
-                    i = false
-                    empty = true
-                    //этим обозначаю что  полужир кончился
-                }
+            } else {
+                var line = lines
+                while (Regex("""\*|(~~)""").find(line) != null) {
+                    if (Regex("""(?<!\*)\*(?!\*)""").containsMatchIn(line) && (!i)) {
+                        //если не было присутствия полужира пишем его начало
+                        line = Regex("""(?<!\*)\*(?!\*)""").replaceFirst(line, "<i>")
+                        i = true
+                        empty = true
+                        //обозначаю, что начало присутствует
+                    }
+                    if (Regex("""(?<!\*)\*(?!\*)""").containsMatchIn(line) && (i)) {
+                        line = Regex("""(?<!\*)\*(?!\*)""").replaceFirst(line, "</i>")
+                        i = false
+                        empty = true
+                        //этим обозначаю что  полужир кончился
+                    }
 
-                //условие на полужир кончилось
-                //началось на курсив - регекс ищет только 2!
-                if (Regex("""(?<!\*)\*\*(?!\*)""").containsMatchIn(line) && (!b)) {
-                    //если не было присутствия курсива пишем его начало
-                    line = Regex("""(?<!\*)\*\*(?!\*)""").replaceFirst(line, "<b>")
-                    b = true
-                    empty = true
-                    //обозначаю, что начало присутствует
+                    //условие на полужир кончилось
+                    //началось на курсив - регекс ищет только 2!
+                    if (Regex("""(?<!\*)\*\*(?!\*)""").containsMatchIn(line) && (!b)) {
+                        //если не было присутствия курсива пишем его начало
+                        line = Regex("""(?<!\*)\*\*(?!\*)""").replaceFirst(line, "<b>")
+                        b = true
+                        empty = true
+                        //обозначаю, что начало присутствует
+                    }
+                    if (Regex("""(?<!\*)\*\*(?!\*)""").containsMatchIn(line) && (b)) {
+                        line = Regex("""(?<!\*)\*\*(?!\*)""").replaceFirst(line, "</b>")
+                        b = false
+                        empty = true
+                        //этим обозначаю что курсив кончился
+                    }
+                    //ну наконеч на 3 звездочки, супер тяж остался
+                    if (Regex("""(?<!\*)\*\*\*(?!\*)""").containsMatchIn(line) && (b == false and i)) {
+                        //если отсутствуют пажилые начала и нашлись три звездочки - начинаем
+                        line = Regex("""(?<!\*)\*\*\*(?!\*)""").replaceFirst(line, "<b><i>")
+                        i = true
+                        b = true
+                    }
+                    if (Regex("""(?<!\*)\*\*\*(?!\*)""").containsMatchIn(line) && (b != false and i)) {
+                        line = Regex("""(?<!\*)\*\*\*(?!\*)""").replaceFirst(line, "</b></i>")
+                        i = false
+                        b = false
+                    }
+                    if (Regex("""(~~)""").containsMatchIn(line) && (!s)) {
+                        //если не было присутствия почеркушки пишем ее начало
+                        line = Regex("""(~~)""").replaceFirst(line, "<s>")
+                        s = true
+
+                        //обозначаю, что начало присутствует
+                    }
+                    if (Regex("""(~~)""").containsMatchIn(line) && (s)) {
+                        line = Regex("""(~~)""").replaceFirst(line, "</s>")
+                        s = false
+
+                        //этим обозначаю что кончилась
+                    }
                 }
-                if (Regex("""(?<!\*)\*\*(?!\*)""").containsMatchIn(line) && (b)) {
-                    line = Regex("""(?<!\*)\*\*(?!\*)""").replaceFirst(line, "</b>")
-                    b = false
-                    empty = true
-                    //этим обозначаю что курсив кончился
-                }
-                //ну наконеч на 3 звездочки, супер тяж остался
-                if (Regex("""(?<!\*)\*\*\*(?!\*)""").containsMatchIn(line) && (b == false and i)) {
-                    //если отсутствуют пажилые начала и нашлись три звездочки - начинаем
-                    line = Regex("""(?<!\*)\*\*\*(?!\*)""").replaceFirst(line, "<b><i>")
-                    i = true
-                    b = true
-                    empty = true
-                }
-                if (Regex("""(?<!\*)\*\*\*(?!\*)""").containsMatchIn(line) && (b != false and i)) {
-                    line = Regex("""(?<!\*)\*\*\*(?!\*)""").replaceFirst(line, "</b></i>")
-                    i = false
-                    b = false
-                    empty = true
-                }
-                if (Regex("""(~~)""").containsMatchIn(line) && (!s)) {
-                    //если не было присутствия почеркушки пишем ее начало
-                    line = Regex("""(~~)""").replaceFirst(line, "<s>")
-                    s = true
-                    empty = true
-                    //обозначаю, что начало присутствует
-                }
-                if (Regex("""(~~)""").containsMatchIn(line) && (s)) {
-                    line = Regex("""(~~)""").replaceFirst(line, "</s>")
-                    s = false
-                    empty = true
-                    //этим обозначаю что кончилась
-                }
+                it.write(line)
+                empty = true
             }
-            it.write(line)
         }
         it.write("</p>")
         it.write("</body>")
