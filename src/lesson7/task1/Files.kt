@@ -383,7 +383,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var b = false
     var i = false
     var s = false
-    var empty = true
+    var empty = false
     File(outputName).bufferedWriter().use {
         for (j in stack)
             it.write(j)
