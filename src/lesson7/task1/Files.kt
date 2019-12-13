@@ -383,15 +383,17 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var b = false
     var i = false
     var s = false
+    var empty = true
     File(outputName).bufferedWriter().use {
         for (j in stack)
             it.write(j)
         //вывод первоначальных строк
         //условие на одну ТОЛЬКО звездочку
         for (lines in File(inputName).readLines()) {
-            if (lines.isEmpty()) {
+            if (lines.isEmpty() and empty) {
                 it.write("</p>")
                 it.write("<p>")
+                empty = false
             }
             var line = lines
             while (Regex("""\*|(~~)""").find(line) != null) {
@@ -445,6 +447,7 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                 }
             }
             it.write(line)
+            empty = true
         }
         it.write("</p>")
         it.write("</body>")
