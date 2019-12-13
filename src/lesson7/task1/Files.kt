@@ -408,7 +408,6 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
 
             //условие на полужир кончилось
             //началось на курсив - регекс ищет только 2!
-
             if (Regex("""(?<!\*)\*\*(?!\*)""").containsMatchIn(line) && (!b)) {
                 //если не было присутствия курсива пишем его начало
                 line = Regex("""(?<!\*)\*\*(?!\*)""").replaceFirst(line, "<b>")
