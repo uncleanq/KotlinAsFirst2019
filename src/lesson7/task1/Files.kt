@@ -403,13 +403,11 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                         //если не было присутствия полужира пишем его начало
                         line = Regex("""(?<!\*)\*(?!\*)""").replaceFirst(line, "<i>")
                         i = true
-                        empty = true
                         //обозначаю, что начало присутствует
                     }
                     if (Regex("""(?<!\*)\*(?!\*)""").containsMatchIn(line) && (i)) {
                         line = Regex("""(?<!\*)\*(?!\*)""").replaceFirst(line, "</i>")
                         i = false
-                        empty = true
                         //этим обозначаю что  полужир кончился
                     }
 
@@ -419,13 +417,11 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                         //если не было присутствия курсива пишем его начало
                         line = Regex("""(?<!\*)\*\*(?!\*)""").replaceFirst(line, "<b>")
                         b = true
-                        empty = true
                         //обозначаю, что начало присутствует
                     }
                     if (Regex("""(?<!\*)\*\*(?!\*)""").containsMatchIn(line) && (b)) {
                         line = Regex("""(?<!\*)\*\*(?!\*)""").replaceFirst(line, "</b>")
                         b = false
-                        empty = true
                         //этим обозначаю что курсив кончился
                     }
                     //ну наконеч на 3 звездочки, супер тяж остался
