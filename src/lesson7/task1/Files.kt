@@ -384,12 +384,18 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var i = false
     var s = false
     var empty = false
-
+//Я ИЗВиняюсь за кучу сабмитов, не знал как починить
+    //это последний, я перестал уже понимать почему прога не работает
     File(outputName).bufferedWriter().use {
         for (j in stack)
             it.write(j)
         //вывод первоначальных строк
         val f = File(inputName).readLines().toMutableList()
+        var check = f.lastIndex
+        while (f[check].isEmpty()) {
+            f -= f[check]
+            check = f.lastIndex
+        }
         for (lines in f) {
             if (lines.isEmpty()) {
                 if (empty) {
@@ -398,11 +404,6 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
                     empty = false
                 }
             } else {
-                var check = f.lastIndex
-                while (f[check].isEmpty()) {
-                    f -= f[check]
-                    check = f.lastIndex
-                }
                 var line = lines
                 while (Regex("""\*|(~~)""").find(line) != null) {
                     if (Regex("""(?<!\*)\*(?!\*)""").containsMatchIn(line) && (!i)) {
