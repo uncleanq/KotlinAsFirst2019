@@ -384,12 +384,18 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     var i = false
     var s = false
     var empty = false
+    val f = File(inputName).readLines().toMutableList()
+    var check = f.last()
+    while (check.isEmpty()) {
+        f -= check
+        check = f.last()
+    }
     File(outputName).bufferedWriter().use {
         for (j in stack)
             it.write(j)
         //вывод первоначальных строк
         //условие на одну ТОЛЬКО звездочку
-        for (lines in File(inputName).readLines()) {
+        for (lines in f) {
             if (lines.isEmpty()) {
                 if (empty) {
                     it.write("</p>")
