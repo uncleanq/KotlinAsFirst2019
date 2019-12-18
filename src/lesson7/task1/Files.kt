@@ -390,17 +390,12 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
         for (j in stack)
             it.write(j)
         //вывод первоначальных строк
-        val f = File(inputName).readLines().toMutableList()
-        if (f == emptyList<String>()) {
+        if (File(inputName).readLines() == emptyList<String>()) {
             it.write("</p>")
             it.write("</body>")
             it.write("</html>")
         } else {
-            var check = f.lastIndex
-            while (f[check] == "") {
-                f.remove(f[check])
-                check = f.lastIndex
-            }
+            val f = File(inputName).readLines().dropLastWhile { it.isEmpty() }
             for (lines in f) {
                 if (lines.isEmpty()) {
                     if (empty) {
