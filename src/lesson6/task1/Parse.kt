@@ -322,7 +322,7 @@ fun train(from: String, to: String, route: String): String {
     var lastH = -1
     var lastM = -1
     var dep = -1
-    var arr: Int
+    var arr = -1
     //избегаю 00:00
     var timeToMin = -1
     var depart = false
@@ -340,6 +340,7 @@ fun train(from: String, to: String, route: String): String {
             lastM = time[1].toInt()
             dep = time[0].toInt() * 60 + time[1].toInt()
             depart = true
+            continue
             //время отправления
         }
         if (kus[0] == to) {
