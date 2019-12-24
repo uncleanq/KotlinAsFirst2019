@@ -281,39 +281,6 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  */
 fun mostExpensive(description: String): String = TODO()
 
-
-fun phone(text: String): String {
-    require(!Regex("""^-""").containsMatchIn(text))
-    require(!Regex("""--""").containsMatchIn(text))
-    require(!Regex("""[а-я]|(ё)""").containsMatchIn(text))
-    val string = StringBuilder()
-    val tex = text.toLowerCase()
-    val one = listOf('a', 'b', 'c', '2')
-    val two = listOf('d', 'e', 'f', '3')
-    val three = listOf('g', 'h', 'i', '4')
-    val four = listOf('j', 'k', 'l', '5')
-    val five = listOf('m', 'n', 'o', '6')
-    val six = listOf('p', 'q', 'r', 's', '7')
-    val seven = listOf('t', 'u', 'v', '8')
-    val eight = listOf('w', 'x', 'y', 'z', '9')
-    for (char in tex) {
-        when {
-            one.contains(char) -> string.append(one.last())
-            two.contains(char) -> string.append(two.last())
-            three.contains(char) -> string.append(three.last())
-            four.contains(char) -> string.append(four.last())
-            five.contains(char) -> string.append(five.last())
-            six.contains(char) -> string.append(six.last())
-            seven.contains(char) -> string.append(seven.last())
-            eight.contains(char) -> string.append(eight.last())
-            char == '-' -> string.append('-')
-            char == '0' -> string.append('0')
-            else -> string.append('1')
-        }
-    }
-    return string.toString()
-}
-
 fun train(from: String, to: String, route: String): String {
     val dest = route.split(Regex("""(;\s+)""")).toMutableList()
     for (i in dest)

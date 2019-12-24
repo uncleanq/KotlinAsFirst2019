@@ -124,34 +124,6 @@ class Tests {
     }
 
     @Test
-    fun phone() {
-        assertEquals("3245", phone("FAIL"))
-        assertEquals("1-800-33284", phone("1-800-DEATH"))
-        assertEquals("1", phone("%"))
-        assertThrows(IllegalArgumentException::class.java) { phone("-") }
-        assertThrows(IllegalArgumentException::class.java) { phone("ф") }
-        assertThrows(IllegalArgumentException::class.java) { phone("--") }
-    }
-
-    @Test
-    fun train() {
-        assertEquals(
-            "1 час 35 минут",
-            train(
-                "Купчино",
-                "Вырица",
-                "Купчино 09:46; Ц.Село 10:34; Павловск 10:39; Вырица 11:21; Ор 12:10")
-        )
-        assertThrows(IllegalArgumentException::class.java) {
-            train(
-                "Купчино",
-                "Вырица",
-                "Купчино 099:46; Ц.Село 10:34; Павловск 10:39; Вырица 11:21; Ор 12:10"
-            )
-        }
-    }
-
-    @Test
     @Tag("Hard")
     fun fromRoman() {
         assertEquals(1, fromRoman("I"))
