@@ -281,6 +281,103 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  */
 fun mostExpensive(description: String): String = TODO()
 
+
+fun phone(text: String): String {
+    require(!Regex("""^-""").containsMatchIn(text))
+    require(!Regex("""--""").containsMatchIn(text))
+    require(!Regex("""[а-я]|(ё)""").containsMatchIn(text))
+    val string = StringBuilder()
+    val tex = text.toLowerCase()
+    val one = listOf('a', 'b', 'c', '2')
+    val two = listOf('d', 'e', 'f', '3')
+    val three = listOf('g', 'h', 'i', '4')
+    val four = listOf('j', 'k', 'l', '5')
+    val five = listOf('m', 'n', 'o', '6')
+    val six = listOf('p', 'q', 'r', 's', '7')
+    val seven = listOf('t', 'u', 'v', '8')
+    val eight = listOf('w', 'x', 'y', 'z', '9')
+    for (char in tex) {
+        when {
+            one.contains(char) -> string.append(one.last())
+            two.contains(char) -> string.append(two.last())
+            three.contains(char) -> string.append(three.last())
+            four.contains(char) -> string.append(four.last())
+            five.contains(char) -> string.append(five.last())
+            six.contains(char) -> string.append(six.last())
+            seven.contains(char) -> string.append(seven.last())
+            eight.contains(char) -> string.append(eight.last())
+            char == '-' -> string.append('-')
+            char == '0' -> string.append('0')
+            else -> string.append('1')
+        }
+    }
+    return string.toString()
+}
+
+fun train(from: String, to: String, route: String): String {
+    val dest = route.split(Regex("""(;\s+)""")).toMutableList()
+    for (i in dest)
+        if (i.isEmpty())
+            dest -= i
+    var lastH = -1
+    var lastM = -1
+    var dep = -1
+    var arr = -1
+    //избегаю 00:00
+    var timeToMin = -1
+    var depart = false
+    var arrival = false
+    for (i in dest) {
+        val kus = i.trim(';').split(Regex("""\s+"""))
+        require(kus.size == 2)// формат "место время"
+        require(Regex("""([0-9]{2}:[0-9]{2})""").matches(kus[1]))
+        val time = kus[1].split(':')
+        require((time[0].toInt() in 0..23 && time[1].toInt() in 0..59))
+        //совпадение формата времени
+
+        if (kus[0] == from) {
+            lastH = time[0].toInt()
+            lastM = time[1].toInt()
+            dep = time[0].toInt() * 60 + time[1].toInt()
+            depart = true
+            continue
+            //время отправления
+        }
+        if (kus[0] == to) {
+            require(
+                (time[0].toInt() > lastH
+                        || (time[0].toInt() == lastH && time[1].toInt() > lastM))
+            )
+            //требую шобы прошлые часы были меньше новых
+            if (depart) {
+                arr = time[0].toInt() * 60 + time[1].toInt()
+                arrival = true
+                timeToMin = arr - dep
+            }
+        }
+
+    }
+
+    require(depart && arrival)
+    var hour = 0 // используем в качестве счета часов
+    var minutes = 0 // используем в качестве счета минут
+    while (timeToMin > 0) {
+        when {
+            timeToMin >= 60 -> {
+                hour++
+                timeToMin -= 60
+            }
+            else -> {
+                minutes++
+                timeToMin --
+            }
+        }
+    }
+    return if (hour != 0) ("$hour час $minutes минут")
+    else ("$minutes мин")
+}
+
+
 /**
  * Сложная
  *

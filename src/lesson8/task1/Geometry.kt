@@ -3,10 +3,7 @@
 package lesson8.task1
 
 import lesson1.task1.sqr
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Точка на плоскости
@@ -196,7 +193,18 @@ fun lineByPoints(a: Point, b: Point): Line = TODO()
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = TODO()
+fun bisectorByPoints(a: Point, b: Point): Line = TODO() /*{
+    //найти середину точку середину - очевидно
+    //угол наклона через тангенс
+    val mid = Point((a.x - b.y) / 2, (a.y - b.y) / 2)
+    //atan выдаст
+    var angle = atan((a.y - b.y) / (a.x - b.x))
+    if (angle > PI)
+        angle -= PI
+    if (angle < 0)
+        angle += PI
+    return (Line(mid, angle))
+}*/
 
 /**
  * Средняя
